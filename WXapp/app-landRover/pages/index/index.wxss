@@ -1,0 +1,11 @@
+swiper{
+  /* 100vh 当前设备的 可视区域总高度 */
+  height: 100vh;
+}
+.pic_list{
+  width: 100%;
+  height:42%;
+}
+.content view{
+  text-align: center;
+}

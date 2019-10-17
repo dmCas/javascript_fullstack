@@ -1,0 +1,14 @@
+<!--pages/cardetail/index.wxml-->
+<!-- (MV)  VM -->
+<!-- view 视图 -->
+<!-- model 模型层 (js -> data: {}) 提供数据 -->
+<view>
+  <text>{{ id }}</text>
+  <view>
+    {{ car.meta.price }}
+  </view>
+    
+</view>
+  
+
+
