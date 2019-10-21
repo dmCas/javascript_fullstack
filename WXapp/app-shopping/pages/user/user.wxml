@@ -1,0 +1,22 @@
+<!--pages/user/user.wxml-->
+<view class="main">
+  <view class="header">
+    <!-- 定义用户头像 type="userAvatarUrl" 必须 可查文档 -->
+    <open-data class="thumb" type="userAvatarUrl"></open-data>  
+    <open-data class="thumb thumb1" type="userNickName"></open-data>
+    <text class="about">关于我们</text>      
+  </view>
+  <view class="address-box">
+    <view class="address-manage">
+      <navigator class="" target="" url="../address/address">地址管理</navigator>
+    </view>
+    <view class="address-list">
+      <view>{{address.name}}</view>
+      <view>{{address.detail}}</view>
+      <view>{{address.address}}</view>
+    </view>
+  </view>
+   <view class="order-box">
+      <view class="orders">我的订单</view>
+    </view> 
+</view>

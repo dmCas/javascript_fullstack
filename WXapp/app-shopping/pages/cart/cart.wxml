@@ -11,17 +11,18 @@
         <text class="cart-pro-name">{{item.title}}</text>
         <text class="cart-pro-price">{{item.price}}</text>
         <view class="cart-count-box">
-          <text class="cart-count-down" bindtap="minusCount" ata-index="{{index}}">-</text>
+          <text class="cart-count-down" bindtap="minusCount" data-index="{{index}}">-</text>
           <text class="cart-count-num">{{item.num}}</text>
-          <text class="cart-count-add" bindtap="addCount" ata-index="{{index}}">+</text>
+          <text class="cart-count-add" bindtap="addCount" data-index="{{index}}">+</text>
         </view>
         <view class="cart-del" bindtap="deleteList" data-index="{{index}}">x</view>
       </view>
     </view>
     <view class="cart-footer">
-      <icon wx:if="{{item.selectAllStatus}}" class="total-select" type="success" size="23" color="#fff"    bindtap="selectAll" ></icon>
+      <!-- <icon wx:if="{{item.selectAllStatus}}" class="total-select" type="success_circle" size="23" color="#fff" bind:tap="selectAll" ></icon> -->
+            <icon wx:if="{{selectAllStatus}}" class="total-select" type="success_circle" size="23" color="#fff" bind:tap="selectAll"></icon>
       <icon wx:else class="total-select" type="circle" size="23" color="#fff"
-bindtap="selectAll" ></icon>
+bind:tap="selectAll" ></icon>
       <navigator url="../orders/orders">
         <view class="order-icon">
           <image class="" src="../../image/icon3.png"></image>
