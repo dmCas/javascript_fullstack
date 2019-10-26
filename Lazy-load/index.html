@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .image-item{
+      margin-bottom: 50px;
+      height: 200px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+    <img src="" class="image-item" lazyload="true" data-original="http://img1.3lian.com/2015/a1/149/d/129.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://img15.3lian.com/2015/f2/57/d/96.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://img2.3lian.com/2014cf/f6/146/d/93.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://s9.knowsky.com/sc/mjpg/92/2013082412182770364.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://pic1.win4000.com/wallpaper/b/546441f1d83c2.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://www.officedoyen.com/uploads/allimg/140929/1-140929230255201.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://img1.3lian.com/2015/w22/38/d/82.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://b.zol-img.com.cn/desk/bizhi/image/4/960x600/1393553860400.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://img2.3lian.com/2014cf/f6/146/d/92.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://pic1.win4000.com/wallpaper/2018-01-09/5a547c0cb840c.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://image.biaobaiju.com/uploads/20180802/00/1533139825-SvFkOmnxrA.jpg" />
+    <img src="" class="image-item" lazyload="true" data-original="http://img3.xiazaizhijia.com/walls/20160927/1440x900_dec5fdacc3059ca.jpg" />
+    
+    <script>
+      // 实现懒加载
+      
+
+      //获取浏览器容器的高度
+      var viewHeight = document.documentElement.clientHeight;
+      function lazyLoad() {
+        var eles = document.querySelectorAll('img[data-original][lazyload]');
+        Array.prototype.forEach.call(eles, function(item, index) {
+          var rect
+          if (!item.dataset.original)  return
+          // 原生js 获取元素的大小 以及 距离窗口的距离
+          rect = item.getBoundingClientRect()
+         
+          if(rect.bottom >= 0 && rect.top < viewHeight)
+          {
+            !function (){   
+              //定义一个img标签
+              var img = new Image()
+              img.src = item.dataset.original
+              
+              img.onload = function() {
+                item.src = img.src
+              }
+              item.removeAttribute('data-original')
+              item.removeAttribute('lazyload')
+            }()
+            // !function() {}()也是自执行函数
+          }
+        })
+      }
+      lazyLoad()
+      document.addEventListener('scroll', lazyLoad)
+    </script>
+</body>
+</html>
