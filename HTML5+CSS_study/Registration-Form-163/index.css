@@ -80,14 +80,22 @@ ul li a:hover{
 .Email-Adress{
   padding-left: 50px;
   position: relative;
+  padding-top: 5px;
+  padding-bottom: 30px;
 }
-
+.Email-Adress-tit{
+  height: 20px;
+  line-height: 20px;
+  font-weight: normal;
+  padding-left: 10px;
+}
 .Email-Adress-tit span{
   color: red;
+  padding-right: 8px;
 }
 .Email-Adress-ipt{
   position: absolute;
-  width: 400px;
+  width: 335px;
   top:0;
   left: 150px;
 }
@@ -115,5 +123,23 @@ select{
   font-weight: bold;
   color: #555;
 }
-
+.hint-1{
+  color: gray;
+  font-size: 13px;
+}
+.Email-Adress-tit1{
+  padding-left:40px;
+}
+.Email-Adress-ipt .ipt1{
+  width: 100%;
+  font-weight: normal;
+  color: rgb(153, 153, 153);
+  box-sizing: border-box;
+  padding: 4px 5px;
+  border: #ABABAB 1px solid;
+  box-shadow: 2px 2px 3px #EDEDED inset;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 3px;
+}
 
