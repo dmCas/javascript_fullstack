@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+<script>
+    /**
+ * Definition for singly-linked list.
+ * function ListNode(val) {
+ *     this.val = val;
+ *     this.next = null;
+ * }
+ */
+
+/**
+ * @param {ListNode} head
+ * @return {boolean}
+ */
+var hasCycle = function(head) {
+    let map = new Map();
+    let current = head;
+    while(current){
+      //map.has() -> 判断是否存在指定成员，返回值为 true / false
+      if(map.has(current)){
+        return true
+      }
+      else {
+        //map.set(key, value) -> 为key设置键值，如已经存在该key则更新，否则添加新元素，返回值是实例本身
+        map.set(current, '123')
+      }
+      current = current.next;
+    }
+    return false
+};  
+  // 快慢指针
+  var hasCycle1 = function(head){
+    var slow = fast = head;
+    while(slow && fast && fast.next){
+      slow = slow.next;
+      //快指针遍历两个
+      fast = fast.next.next;
+      if(slow === fast){
+        return true
+      }
+    }
+    return false
+  }
+</script>
+</body>
+</html>

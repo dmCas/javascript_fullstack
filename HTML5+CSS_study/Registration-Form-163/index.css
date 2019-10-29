@@ -1,0 +1,119 @@
+*{
+  padding: 0;
+  margin: 0;
+}
+a {
+  color: #039;
+  text-decoration: none;
+}
+
+ul{
+  list-style: none;
+}
+body{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.container{
+  width: 800px;
+  padding: 40px 60px;
+  height: auto;
+  border: 1px solid #000;
+}
+.form-header{
+  height: 60px;
+  padding-left:150px;
+  padding-right: 100px;
+  
+}
+.form-header ul{
+  width: 80%;
+  height: 50px;
+  background-image: url(./glb_v2.png);
+  background-repeat: no-repeat;
+  background-position:-360px -432px;
+}
+.form-header .tabs1-on{
+  background-position:-360px -432px;
+}
+.form-header .tabs2-on{
+  background-position:0 -432px;
+}
+.form-header .tabs1-on .a1,
+.form-header .tabs1-on .a1:hover,
+.form-header .tabs2-on .a2,
+.form-header .tabs2-on .a2:hover
+{ font-weight:bold;
+  color:#FFF;
+  cursor:default;
+  text-decoration:none
+}
+ul li{
+  width: 166px;
+  height: 35px;
+  float: left;
+}
+
+ul li a{
+  /* 块级元素才可以设置width-height */
+  display: block;
+  text-align: center;
+  /* border: 1px solid #000; */
+  width: 100%;
+  height: 35px;
+  line-height: 35px;  
+  text-decoration:none;
+  color:black
+}
+ul li a:hover{
+  text-decoration:none;
+}
+/* .Email-Adress{
+  position: relative;
+}
+.Email-Adress-tit{
+  position: absolute;
+
+} */
+.Email-Adress{
+  padding-left: 50px;
+  position: relative;
+}
+
+.Email-Adress-tit span{
+  color: red;
+}
+.Email-Adress-ipt{
+  position: absolute;
+  width: 400px;
+  top:0;
+  left: 150px;
+}
+.Email-Adress-ipt .ipt{
+  /* border-radius:5%; */
+  width: 200px;
+  font-weight: normal;
+  color: rgb(153, 153, 153);
+  box-sizing: border-box;
+  padding: 4px 5px;
+  border: #ABABAB 1px solid;
+  box-shadow: 2px 2px 3px #EDEDED inset;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 3px;
+}
+.txt-1{
+  top: 0;
+  display: inline-block;
+}
+select{
+  padding: 3px 10px;
+  width: 110px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #555;
+}
+
+
