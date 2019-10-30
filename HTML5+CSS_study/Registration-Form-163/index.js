@@ -10,3 +10,20 @@ const lis = tab.getElementsByTagName('li')
       tab.style.cssText=" background-position:0 -432px;";
     }
   }
+
+  //检查邮箱
+  function checkEmail(){
+    var email = document.getElementById('email').value;
+    var reg = /^[a-z0-9]\w/i;
+    if(!reg.test(email)){  
+        document.getElementById('warn-1').style.cssText="display:block;";
+              //符合规则  
+      //         spanNode.innerHTML = "".fontcolor("green");  
+      //         document.getElementById("emailclass").className = "icon ticker";    
+              return false;  
+        }
+    else{
+      document.getElementById('warn-1').style.cssText="display:none;";
+      return true;
+    }
+  }

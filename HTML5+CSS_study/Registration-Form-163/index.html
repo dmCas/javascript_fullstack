@@ -54,23 +54,30 @@
       </ul>
     </div>
     <div class="form-main" style="display: block">
-      <dl class="Email-Adress">
+      <dl class="Email-Adress Email">
         <dt class="Email-Adress-tit"><span>*</span>邮件地址</dt>
         <dd class="Email-Adress-ipt">
-          <input type="text" name="name" class="ipt">
+          <input type="text" name="email" class="ipt" id="email" onblur="checkEmail()">
           <strong class="txt-1">@</strong>
           <select name="" id="selectEmail">
             <option value="163.com" selected="selected">163.com</option>
             <option value="126.com">126.com</option>
             <option value="yeah.net">yeah.net</option>
           </select>
-          <div class="hint-1"><span>0~18个字符，可使用字母、数字、下划线，需以字母开头</span></div>  
+          <div class="hint-1"><span>0~18个字符，可使用字母、数字、下划线，需以字母开头</span></div>
+          <div class="warn-1" style="display:none" id="warn-1">
+            <div class="arr"></div>
+            <div class="attent">
+              <b class="ico ico-warn-big"></b>
+              <strong class="hint-1-1"><span>长度应为6~18个字符</span></strong>
+            </div>
+          </div>
         </dd>
       </dl>
-      <dl class="Email-Adress">
+      <dl class="Email-Adress Email-password">
         <dt class="Email-Adress-tit Email-Adress-tit1"><span>*</span>密码</dt>
         <dd class="Email-Adress-ipt ">
-            <input type="text" name="name" class="ipt1">
+            <input type="text" name="password" class="ipt1">
         </dd>
       </dl>
     </div>
