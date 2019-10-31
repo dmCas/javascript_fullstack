@@ -49,7 +49,7 @@ body{
 { font-weight:bold;
   color:#FFF;
   cursor:default;
-  text-decoration:none
+  text-decoration:none;
 }
 ul li{
   width: 166px;
@@ -132,6 +132,20 @@ select{
   color: gray;
   font-size: 13px;
 }
+.hint-1 span .ico-suc-sml {
+  width: 14px;
+  height: 14px;
+  background-position: 0 -288px;
+  background-image: url(./glb_v2.png);
+  display: inline-block;
+}
+.hint-1 span .ico-warn-sm2 {
+  width: 14px;
+  height: 14px;
+  background-position: -36px -288px;
+  background-image: url(./glb_v2.png);
+  display: inline-block;
+}
 .Email-Adress-tit1{
   padding-left:40px;
 }
@@ -187,5 +201,8 @@ select{
 .Email-Adress-ipt .warn-1 .attent .hint-1-1 span{
   font-size: 14px;
   color: red;
- 
+}
+
+.Email-Adress-yzm{
+  padding-left: 24px;
 }
