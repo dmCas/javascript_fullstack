@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <title>Document</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    html{
+      height: 100%;
+      background-color: #fff;
+      font-size: 62.5%;
+    }
+    body{
+      /* display: flex;
+      align-items: center;
+      justify-content: center; */
+      min-height: 100%;
+      margin: 0;
+      font-size: 1.4rem;
+      /* 网格布局 */
+      display: grid;
+      place-items: center;
+      /* position: relative; */
+    }
+    .btn{
+      background-color:#42B983;
+      color: white;
+      padding:0.5em 1em;
+      border: none;
+      /* outline: none; */
+      font-size: 1.8rem;
+      border-radius: .3em;
+      cursor: pointer;
+    }
+    .modal{
+      /* position: absolute; */
+      position: fixed;
+      margin: auto;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      width: fit-content;
+      height: fit-content;
+      /* top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%); */
+      width: 300px;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+      background-color: #FFFFF3;
+      padding: 40px 50px;
+      text-align: center;
+      border-radius: 5px;
+      z-index: 999;
+    }
+    .modal h1, .modal p{
+      margin-bottom: 1rem;
+    }
+    .pop-enter-active,
+    .pop-leave-active{
+      transition: transform .4s cubic-bezier(0.5, 0, 0.5, 1), opacity 0.4s linear;
+    }
+    .pop-enter,
+    .pop-leave-to{
+      transform: scale(0.3) translateY(-50%);
+      opacity: 0;
+    }
+    .model-overlay{
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      z-index: 999;
+      background-color: #2c3e50;
+      opacity: 0.6;
+    }
+    .fade-enter-active,
+    .fade-leave-active{
+      transition: opacity .4s linear;
+    }
+    .fade-enter,
+    .fade-leave-to{
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <button class="btn" @Click="showModel = true">Show Model</button>
+    <transition name="fade">
+      <div class="model-overlay" v-if="showModel" >
+      </div>
+    </transition>
+
+
+    <transition name="pop">
+      <div v-if="showModel"  class="modal" >
+        <h1>Vue Transitions</h1>
+        <p>The <code>&lt;transition&gt;</code> component in Vue can create wonderful animated entrances and exits.
+        </p>
+        <button class="btn" @Click="showModel = false">Hide Modal</button>
+      </div>
+    </transition>
+  </div>
+
+  <script>
+    new Vue({
+      el:'#app',
+      data (){
+        return {
+          showModel: false
+        }
+      }
+    })
+  </script>
+</body>
+</html>
