@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+  </ul>
+  <script>
+  //点击 li 输出 li里对应的内容
+  const lis = document.querySelectorAll('li')
+  const ul = document.querySelector('ul')
+  // lis[0].addEventListener('click',() => {
+  //   console.log(el.innerHTML)
+  // })
+  // lis[1].addEventListener('click',() => {
+  //   console.log(el.innerHTML)
+  // })
+  // lis[2].addEventListener('click',() => {
+  //   console.log(el.innerHTML)
+  // })
+  //使用事件模型
+  ul.addEventListener('click',(event)=>{
+    //谁触发了click 就输出谁
+    // console.log(event.target.innerHTML)
+    if(event.target.nodeName == 'LI'){
+      console.log(event.target.nodeName)
+      console.log(event.target.innerHTML)
+    }
+  })
+  // for(let el of lis){
+  //   el.addEventListener('click', ()=>{
+  //     console.log(el.innerHTML);
+  //   })
+  // }
+  </script>
+</body>
+</html>

@@ -1,5 +1,6 @@
 const tab = document.getElementById('tabsUl')
 const lis = tab.getElementsByTagName('li')
+const as = document.getElementsByTagName('a')
 const ico = document.getElementById('icon_1')
 const ico2 = document.getElementById('icon_2')
 const ico3 = document.getElementById('icon_3')
@@ -7,10 +8,14 @@ const ico3 = document.getElementById('icon_3')
     lis[0].onclick = function(){
       tab.setAttribute('class','tab1-on')
       tab.style.cssText="   background-position:-360px -432px;";
+      lis[1].as.style.color="white"
+      lis[0].as.style.color="black"
     }
     lis[1].onclick = function(){
       tab.setAttribute('class','tab2-on')
       tab.style.cssText=" background-position:0 -432px;";
+      lis[1].as.style.color="white"
+      lis[0].as.style.color="black"
     }
   }
 
@@ -92,4 +97,14 @@ const ico3 = document.getElementById('icon_3')
       document.getElementById('password2').style.border = "1px solid red";
       return false;
     }
+  }
+  
+  function yzmWarn(){
+    const yzmtxt = document.getElementById('yzmtxt')
+    console.log(yzmtxt)
+    yzmtxt.style.color = "#FDD692"
+  }
+  function yzmH(){
+    const yzmtxt = document.getElementById('yzmtxt')
+    yzmtxt.style.color = "grey"
   }
