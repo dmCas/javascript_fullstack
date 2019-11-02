@@ -2,6 +2,17 @@
   <div id="app">
     <!-- 父组件给子组件传值 -->
     <v-header :seller="seller"></v-header>
+    <div class="tab border-1px">
+      <div class="tab-item">
+        <router-link to="/goods">商品</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/ratings">评价</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/seller">商家</router-link>
+      </div>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -34,6 +45,23 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="stylus">
+@import './common/stylus/mixin';
+.tab
+  display flex
+  height 40px
+  line-height 40px
+  width 100%
+  border-1px(rgba(7, 17, 27, 0.1))
+  &-item
+    flex 1
+    text-align center
+    a
+      text-decoration none
+      display block
+      font-size 14px
+      color rgb(77, 85, 93)
+      &.router-link-active
+        color rgb(240, 20, 20)
+        
 </style>

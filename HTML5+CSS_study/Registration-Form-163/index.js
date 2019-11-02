@@ -26,23 +26,25 @@ const ico3 = document.getElementById('icon_3')
     // console.log(email)
     var reg = /^[a-z0-9]\w/i;
     var reg1= /^[A-Za-z]+$/;
-    if(!reg.test(email)){  
+    if(!reg.test(email)){  
         document.getElementById('warn-1').style.cssText="display:block;";
-        // document.getElementById('txt-1').innerHTML=" ";
-              //符合规则  
-      //         spanNode.innerHTML = "".fontcolor("green");  
-      //         document.getElementById("emailclass").className = "icon ticker";    
-              return false;  
-        }
+        document.getElementById('txt').innerText="";
+              //符合规则  
+      //         spanNode.innerHTML = "".fontcolor("green");  
+      //         document.getElementById("emailclass").className = "icon ticker";    
+              return false;  
+        }
     else{
       // console.log(reg1.test(email.split("",1)[0]))
       if(reg1.test(email.split("",1)[0])){
         document.getElementById('warn-1').style.cssText="display:none;";
-        ico.setAttribute('class','ico-suc-sml')
+        document.createElement(b)
+        document.getElementsByTagName(b).setAttribute('class','ico-suc-sml')
         document.getElementById('txt-1-1').innerText="恭喜，该邮件地址可注册";
         return true;
       }
       else{
+        document.getElementById('txt').innerText="";
         document.getElementById('warn-1').style.cssText="display:block;";
         document.getElementById('txt-1-2').innerText="邮件地址必需以英文字母开头";
         return false; 

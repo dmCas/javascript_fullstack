@@ -7,6 +7,7 @@
   <title>163邮箱登录</title>
   <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.0/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="./index.css">
+  <link href="https://cdn.bootcss.com/weui/2.0.1/style/weui.min.css" rel="stylesheet">
 </head>
 <body>
   <!-- <div class="container">
@@ -57,7 +58,7 @@
       <dl class="Email-Adress Email">
         <dt class="Email-Adress-tit"><span>*</span>邮件地址</dt>
         <dd class="Email-Adress-ipt">
-          <input type="text" name="email" class="ipt" id="email" oninput="checkEmail()">
+          <input type="text" name="email" class="ipt" id="email" onblur="checkEmail()">
           <strong class="txt-1">@</strong>
           <select name="" id="selectEmail">
             <option value="163.com" selected="selected">163.com</option>
@@ -65,7 +66,7 @@
             <option value="yeah.net">yeah.net</option>
           </select>
           <div class="hint-1" >
-            <span>
+            <span id="txt">
                 <b id="icon_1"></b>
                 <span id="txt-1-1"> 0~18个字符，可使用字母、数字、下划线，需以字母开头</span>
             </span>
@@ -82,7 +83,7 @@
       <dl class="Email-Adress Email-password">
         <dt class="Email-Adress-tit Email-Adress-tit1"><span>*</span>密码</dt>
         <dd class="Email-Adress-ipt ">
-            <input type="password" name="password" class="ipt1" id="password" oninput="checkPas()">
+            <input type="password" name="password" class="ipt1" id="password" onblur="checkPas()">
             <div class="hint-1" >
               <span>
                 <b id="icon_2"></b>
@@ -94,7 +95,7 @@
       <dl class="Email-Adress Email-password">
           <dt class="Email-Adress-tit Email-Adress-tit2"><span>*</span>确认密码</dt>
           <dd class="Email-Adress-ipt ">
-              <input type="password" name="password2" class="ipt1" id="password2" oninput="checkPas1()">
+              <input type="password" name="password2" class="ipt1" id="password2" onblur="checkPas1()">
               <div class="hint-1" >
                 <span>
                 <b id="icon_3"></b>
@@ -116,10 +117,30 @@
                 <b id="icon_3"></b>
                 <span id="yzmtxt">请填写图片中的字符，不区分大小写</span>
               </span>
-     
             </div>
           </dd>  
       </dl>
+      <dl class="Email-Adress Email-password">
+          <dt class="Email-Adress-tit"><span>*</span>手机号码</dt>
+          <dd class="Email-phont-ipt">
+            <input type="text" name="phone" class="ipt1" id="phone" onfocus="phoneWarn()" onblur="phoneH()">
+            <div class="hint-1" style="text-align: center">
+              <span>
+              <span id="xytxt-2">请编辑短信：<span style="color:#333">222</span>发送到<span style="color:#333">106981630163222</span>，以确保账号安全。
+                (短信费用由运营商收取)</span>
+              </span>
+            </div>
+          </dd>  
+      </dl>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" class=""style="vertical-align:middle"> 
+          <span>同意<span style="color:cornflowerblue;vertical-align:middle"  >《服务条款》、《隐私政策》和《儿童隐私政策》</span></span>
+        </label>
+      </div>
+      <div class="weui-form__opr-area">
+        <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">已发送短信验证，立即注册</a>
+      </div>
     </div>
   </div>
 

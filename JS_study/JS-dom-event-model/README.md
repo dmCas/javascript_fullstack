@@ -9,3 +9,6 @@
   DOM2 addEventListener
   DOM3 addEventListener 增加了很多 键盘 鼠标事件
 
+- event.target 找i到触发这个事件的节点
+  event.currentTarget 找到绑定这个事件的节点
+

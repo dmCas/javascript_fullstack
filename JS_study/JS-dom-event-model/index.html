@@ -50,6 +50,9 @@
       event.preventDefault();
       console.log('in')
     }, false)
+    // inNode.addEventListener('click', function(){}) 支持绑定多个事件
+    inNode.onClick = () => {}
+    // inNode.onClick = () => {} 无效,此事件将覆盖上面
     //阻止默认事件
     document.getElementById('md').addEventListener('click',(event)=>{
       event.preventDefault();
