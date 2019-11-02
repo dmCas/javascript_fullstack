@@ -5,19 +5,25 @@
       <div class="content-wrappe">
         <!-- 头像 -->
         <div class="avatar">
-          <img src="./brand@2x.png" alt="">
+          <img :src="seller.avatar" alt="" width="64" height="64">
         </div>
         <!-- 右侧文字简述 -->
         <div class="content">
           <div class="title">
             <span class="brand"></span>
-            <span class="name">粥品香坊</span>
+            <span class="name">{{seller.name}}</span>
           </div>
-          <div class="descriptiton">蜂鸟专送/38分钟送达</div>
-          <div class="support">
-            <span class="icon decrease"></span>
-            <span class="text">在线支付满28减5</span>
+          <div class="descriptiton">{{seller.description}}/{{seller.deliveryTime}}分钟送达</div>
+          <!-- 异步数据先显示初始数据，再显示带数据的数据  v-if="seller.supports"-->
+          <div class="support" v-if="seller.supports">
+            <span class="icon" :class="classMap[seller.supports[0].type]"></span>
+            <span class="text">{{seller.supports[0].description}}</span>
           </div>
+        </div>
+        <!-- 按钮 -->
+        <div class="support-count">
+          <span class="count">5个</span>
+          <i class="icon-keyboard_arrow_right"></i>
         </div>
       </div>
     </div>
@@ -27,15 +33,22 @@
 
 <script>
 export default {
-  created() {
-    this.$http.get('http://ustbhuangyi.com/sell/api/seller')
-    .then((res) => {
-      console.log(res)
-    })
+  // props: ['seller'],
+  props: {
+    seller:{
+      type: Object,
+      default: function () {
+        return {}
+      }
+    }
+  },
+  data () {
+    return {
+      classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee']
+    }
   }
 }
 </script>
-
 
 <style lang='stylus' scoped>
 // 引入定义该变量的文件
@@ -68,7 +81,6 @@ export default {
           bg-image('brand')
           background-size 30px 18px
           background-repeat no-repeat
-// 要让两个盒子拦腰对齐，要都加上 vertical-align middle
 
         .name
           vertical-align middle
@@ -92,25 +104,35 @@ export default {
           vertical-align middle
           &.decrease
             bg-image('decrease_1')
-
           &.discount
             bg-image('discount_1')
-
           &.invoice
             bg-image('invoice_1')
-
-          @.special
+          &.special
             bg-image('special_1')
-
-          @.guarantee
+          &.guarantee
             bg-img('guarantee_1')
         .text
           font-size 10px
           line-height 12px
           vertical-align middle
-        
 
-
+    .support-count
+      position absolute
+      right 12px
+      bottom 14px
+      height 24px
+      line-height 24px
+      padding 0 8px
+      font-size 10px
+      border-radius 14px
+      background rgba(0, 0, 0, 0.2)
+      text-align center
+      .count
+        vertical-align top
+      .icon-keyboard_arrow_right
+        margin-left 2px
+        line-height 24px
 
 
 
