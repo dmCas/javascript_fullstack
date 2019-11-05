@@ -19,3 +19,9 @@ npm run build --report
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
+- ref="" 获取Dom结构
+  this.$nextTick(()=>{
+            this._initScroll()
+        })
+  保证方法在页面渲染之后在执行

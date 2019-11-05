@@ -30,7 +30,7 @@
       <div class="bulletin-wrapper">
         <span class="bulletin-title"></span>
         <span class="bulletin-text">{{seller.bulletin}}</span>
-        <i class="icon-keyboard_arrow_right"></i>
+        <i class="icon-keyboard_arrow_right" @click="detailShow"></i>
       </div>
       <!-- 背景图 -->
       <div class="background">
@@ -234,16 +234,17 @@ export default {
     right 0
     bottom 0
     overflow auto
+    z-index 999
     background rgba(7, 17, 27, 0.8)
     // 背景色虚化
     backdrop-filter blur(10px)
-    // &.fade-enter, 
-    // &.fade-leave-to
-    //   opacity 0
-    //   rgba(7, 17, 27, 0)
-    // &.fade-enter-active,
-    // &.fade-leave-active
-    //   transition all 0.5s
+    &.fade-enter, 
+    &.fade-leave-to
+      opacity 0
+      background rgba(7, 17, 27, 0)
+    &.fade-enter-active,
+    &.fade-leave-active
+      transition all 0.5s
     &-wrapper
       width 100%
       min-height 100%

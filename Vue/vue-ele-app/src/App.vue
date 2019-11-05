@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!-- 父组件给子组件传值 -->
+    <!-- 头部 -->
     <v-header :seller="seller"></v-header>
     <div class="tab border-1px">
       <div class="tab-item">
@@ -33,11 +33,8 @@ export default {
     this.$http.get('http://localhost:8080/static/seller.json', {})
       .then((res) => {
         console.log(res)
-        if(res.data.errno === 0){
-          // 会覆盖已有数据
+        if (res.data.errno === 0) {
           // this.seller = res.data.data
-
-          // 合并两个对象 Object.assign()
           this.seller = Object.assign({}, this.seller, res.data.data)
         }
       })
@@ -46,7 +43,7 @@ export default {
 </script>
 
 <style lang="stylus">
-@import './common/stylus/mixin';
+@import './common/stylus/mixin.styl'
 .tab
   display flex
   height 40px
@@ -57,11 +54,11 @@ export default {
     flex 1
     text-align center
     a
-      text-decoration none
+      text-decoration none 
       display block
       font-size 14px
       color rgb(77, 85, 93)
+      -webkit-tap-highlight-color rgba(0, 0, 0, 0)  
       &.router-link-active
         color rgb(240, 20, 20)
-        
 </style>
