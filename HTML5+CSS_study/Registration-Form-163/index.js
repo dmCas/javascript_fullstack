@@ -28,7 +28,7 @@ const ico3 = document.getElementById('icon_3')
     var reg1= /^[A-Za-z]+$/;
     if(!reg.test(email)){  
         document.getElementById('warn-1').style.cssText="display:block;";
-        document.getElementById('txt').innerText="";
+        // document.getElementById('txt').innerText="";
               //符合规则  
       //         spanNode.innerHTML = "".fontcolor("green");  
       //         document.getElementById("emailclass").className = "icon ticker";    
@@ -37,9 +37,8 @@ const ico3 = document.getElementById('icon_3')
     else{
       // console.log(reg1.test(email.split("",1)[0]))
       if(reg1.test(email.split("",1)[0])){
+        ico.setAttribute('class','ico-suc-sml')
         document.getElementById('warn-1').style.cssText="display:none;";
-        document.createElement(b)
-        document.getElementsByTagName(b).setAttribute('class','ico-suc-sml')
         document.getElementById('txt-1-1').innerText="恭喜，该邮件地址可注册";
         return true;
       }
