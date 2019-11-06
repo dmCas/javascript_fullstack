@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    margin: 0;
+    padding: 0;
+  }
+  html,body{
+    width: 100%;
+  }
+  .page{
+    width: 100%;
+    text-align: center;
+  }
+  .head, .footer{
+    height: 70px;
+    width: 100%;
+    background-color: lightgreen;
+    line-height: 70px;
+  }
+  .content{
+    width: 1000px;
+    margin: 0 auto;
+    background-color: #aaa;
+    min-height: 500px;
+  }
+  @media screen and (max-width: 1000px) {
+    .content{
+    width: 700px;
+    margin: 0 auto;
+    background-color: #aaa;
+    min-height: 500px;
+  }
+}
+@media screen and (max-width: 699px) {
+    .content{
+    width: 400px;
+    margin: 0 auto;
+    background-color: #aaa;
+    min-height: 500px;
+  }
+}
+@media screen and (max-width: 399px) {
+    .content{
+    width: 200px;
+    margin: 0 auto;
+    background-color: #aaa;
+    min-height: 500px;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="head">头部</div>
+    <div class="content">页面内容</div>
+    <div class="footer">底部</div>
+  </div>
+</body>
+</html>

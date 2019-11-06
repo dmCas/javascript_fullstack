@@ -45,6 +45,13 @@
               <h1 class="name">{{seller.name}}</h1>
               <!-- 星星 -->
               <div class="star-wrapper">
+                <div class="rate-content">
+                <input type="radio" name="rate">
+                <input type="radio" name="rate">
+                <input type="radio" name="rate">
+                <input type="radio" name="rate">
+                <input type="radio" name="rate">
+                </div>
               </div>
               <!-- 优惠信息 -->
               <div class="title">
@@ -257,6 +264,36 @@ export default {
           font-size 16px
           text-align center
           font-size 700
+        .star-wrapper
+          width 100%
+          height auto
+          display flex
+          justify-content center
+          align-items center
+          .rate-content
+            display: flex
+            flex-flow: row-reverse
+            padding 50px 100px
+            input 
+              border: none
+              outline: none
+              -webkit-appearance: none
+              cursor: pointer
+            input[name="rate"]
+              font-family: "iconfont"
+              font-size: 30px
+              padding-right: 10px
+              transition: transform 0.2s ease
+            input[name="rate"]::after
+              content: '\e600'
+              color: #999
+            input[name="rate"]:checked::after
+              content:'\e8b4'
+              color: #ffa822
+            input[name="rate"]:checked ~ input[name="rate"]::after
+              content:'\e8b4'
+              color: #ffa822
+            
         .title
           display flex
           width 80%
