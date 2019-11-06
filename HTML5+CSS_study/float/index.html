@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  .box-wrapper{
+    width: 100%;
+    /* 清楚间隙 */
+    /* font-size: 0; */
+
+  }
+  .box{
+    width: 100px;
+    height: 100px;
+    background-color: lightgreen;
+    /* display: inline-block; */
+    float: left;
+    line-height: 100px;
+    text-align: center;
+    
+  }
+  .clearfix::after{
+    content: '';
+    clear: left;
+    display: table;
+  }
+  </style>
+</head>
+<body>
+  <div class="box-wrapper clearfix">
+    <div class="box">1</div>
+    <div class="box">2</div>
+    <div class="box">3</div>
+    <!-- <div class="clearfix"></div> -->
+  </div>
+  <div class="text">Windows PowerShell
+    版权所有 (C) Microsoft Corporation。保留所有权利。
+    尝试新的跨平台 PowerShell https://aka.ms/pscore6  
+    PS E:\javascript_fullstack> </div>
+</body>
+</html>
