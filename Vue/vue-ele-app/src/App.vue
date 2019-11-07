@@ -2,17 +2,6 @@
   <div id="app">
     <!-- 头部 -->
     <v-header :seller="seller"></v-header>
-    <div class="tab border-1px">
-      <div class="tab-item">
-        <router-link to="/goods">商品</router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/ratings">评价</router-link>
-      </div>
-      <div class="tab-item">
-        <router-link to="/seller">商家</router-link>
-      </div>
-    </div>
     <router-view/>
   </div>
 </template>
@@ -54,11 +43,11 @@ export default {
     flex 1
     text-align center
     a
-      text-decoration none 
+      text-decoration none
       display block
       font-size 14px
       color rgb(77, 85, 93)
-      -webkit-tap-highlight-color rgba(0, 0, 0, 0)  
+      -webkit-tap-highlight-color rgba(0, 0, 0, 0) 
       &.router-link-active
         color rgb(240, 20, 20)
 </style>
