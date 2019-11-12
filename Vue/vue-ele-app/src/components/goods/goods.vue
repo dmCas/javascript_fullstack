@@ -6,7 +6,7 @@
           <li 
           v-for="(item, index) in goods" 
           :key="index"
-          class="menu-item" 
+          class="menu-item"
           @click="selectMenu(index)"
           :class="{'current' : currentIndex === index}"
           >
@@ -19,35 +19,38 @@
       </div>
       <div class="foods-wrapper" ref="foodsWrapper">
         <ul>
-          <li class="food-list" 
-          v-for="(item,index) in goods" 
+          <li 
+          class="food-list" 
+          v-for="(item, index) in goods"
           :key="index"
-          ref="foodList">
+          ref="foodList"
+          >
             <h1 class="title">{{item.name}}</h1>
             <ul>
               <li 
               class="food-item border-1px"
-              v-for="(food,index) in item.foods"
+              v-for="(food, index) in item.foods"
               :key="index"
               >
-                <!-- 左 -->
                 <div class="icon">
                   <img :src="food.icon" alt="">
                 </div>
-                <!-- 中 -->
                 <div class="content">
                   <h2 class="name">{{food.name}}</h2>
                   <p class="desc">{{food.description}}</p>
                   <div class="extra">
-                    <span class="count">{{food.sellCount}}</span>
+                    <span class="count">月售{{food.sellCount}}份</span>
                     <span>好评率{{food.rating}}%</span>
                   </div>
                   <div class="price">
-                    <span class="now">￥{{food.price}}</span>
-                    <span class="old" v-if="food.oldPrice">￥{{food.oldPrice}}</span>
+                    <span class="now">¥{{food.price}}</span>
+                    <span class="old" v-if="food.oldPrice">¥{{food.oldPrice}}</span>
+                  </div>
+                  <div class="cartcontrol-wrapper">
+                    <!-- + -->
+                    <cartcontrol :food="food" @add="addFood"></cartcontrol>
                   </div>
                 </div>
-                <!-- 右 -->
               </li>
             </ul>
           </li>
@@ -55,96 +58,115 @@
       </div>
     </div>
     <!-- 购物车 -->
-    <!-- 第三步 使用 -->
-    <v-shopcart></v-shopcart>
+    <shopcart
+      :selectFoods = "selectFoods"
+      :deliveryPrice = "seller.deliveryPrice"
+      :minPrice = "seller.minPrice"
+    ></shopcart>
   </div>
 </template>
 
 <script>
-// 第一步 引入
-import shopcart from '@/components/shopcart/shopcart.vue'
-//引入 依赖
 import BScroll from 'better-scroll'
+import shopcart from '@/components/shopcart/shopcart'
+import cartcontrol from '@/components/cartcontrol/cartcontrol'
 export default {
   name: 'Goods',
+  props: {
+    seller: {
+      type: Object
+    }
+  },
   data () {
     return {
-      goods: {},
-      classMap:['decrease', 'discount', 'special', 'invoice', 'guarantee'],
-      // currentIndex: 0,
+      goods: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      classMap: ['decrease', 'discount', 'special', 'invoice', 'guarantee'],
       listHeight: [],
       scrollY: 0
     }
   },
-  // 第二步 声明
   components: {
-    'v-shopcart': shopcart
+    shopcart,
+    cartcontrol
   },
   created () {
     this.$http.get('http://localhost:8080/static/goods.json')
-    .then((res) => {
-      console.log(res)
-      if(res.data.errno === 0){
-        this.goods = res.data.data
-        this.$nextTick(()=>{
-           this._initScroll()
-           this._calculateHeight()
-        })
-      }
-    })
+      .then((res) => {
+        console.log(res)
+        if (res.data.errno == 0) {
+          this.goods = res.data.data
+          this.$nextTick(() => {
+            this._initScroll()
+            this._calculateHeight()
+          })
+        }
+      })
   },
   computed: {
     currentIndex() {
-     for (let i=0; i< this.listHeight.length; i++){
-       let height1 = this.listHeight[i]
-       let height2 = this.listHeight[i+1]
-       if(!height2 || (this.scrollY >= height1 && this.scrollY < height2)){
-         return i
-       }
-     }
-    return 0
-    } 
+      for (let i = 0; i < this.listHeight.length; i++) {
+        let height1 = this.listHeight[i]
+        let height2 = this.listHeight[i + 1]
+        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+          return i
+        }
+      }
+      return 0
+    },
+    selectFoods () {
+      let foods = [];
+      for (let good of this.goods) {
+        if (good.foods) {
+          for (let food of good.foods) {
+            if (food.count) {
+              foods.push(food)
+            }
+          }
+        }
+      }
+      return foods
+    }
   },
   methods: {
     _initScroll () {
       this.menuScroll = new BScroll(this.$refs.menuWrapper, {
         click: true
-      }),
-      // 商品页面加优雅的滚动
+      })
       this.foodsScroll = new BScroll(this.$refs.foodsWrapper, {
         click: true,
         probeType: 3
-      }),
-      this.foodsScroll.on("scroll", (pos) => {
+      })
+      this.foodsScroll.on("scroll", pos => {
+        // console.log(pos)
         this.scrollY = Math.abs(Math.round(pos.y))
-        console.log(this.scrollY)
       })
     },
     selectMenu (idx) {
-      // console.log(idx)
-      // this.currentIndex = idx;
+      console.log(idx)
+      // this.currentIndex = idx
       let foodList = this.$refs.foodList
-      console.log(foodList)
       let el = foodList[idx]
       this.foodsScroll.scrollToElement(el, 300)
     },
-    _calculateHeight() {
+    _calculateHeight () {
       let foodList = this.$refs.foodList
       let height = 0
       this.listHeight.push(height)
-      for (let i = 0;i < foodList.length; i++){
+      for (let i = 0; i < foodList.length; i++) {
         let item = foodList[i]
-        height = item.clientHeight + height
+        height += item.clientHeight
         this.listHeight.push(height)
       }
-      console.log(this.listHeight)
+    },
+    addFood () {
+
     }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-@import '../../common/stylus/mixin'
+@import '../../common/stylus/mixin.styl'
 .goods
   display flex
   position absolute
@@ -164,7 +186,7 @@ export default {
       line-height 14px
       &.current
         position relative
-        z-index 1
+        z-index 10
         margin-top -1px
         background #fff
         font-weight 700
@@ -178,15 +200,15 @@ export default {
         margin-right 2px
         background-size 12px 12px
         background-repeat no-repeat
-        &.decrease 
+        &.decrease
           bg-image('decrease_3')
-        &.discount 
+        &.discount
           bg-image('discount_3')
-        &.guarantee 
+        &.guarantee
           bg-image('guarantee_3')
-        &.invoice 
+        &.invoice
           bg-image('invoice_3')
-        &.special 
+        &.special
           bg-image('special_3')
       .text 
         display table-cell
@@ -216,7 +238,7 @@ export default {
       .icon 
         flex 0 0 57px
         margin-right 10px
-        img 
+        img
           width 100%
       .content 
         flex 1
