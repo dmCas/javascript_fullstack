@@ -3,7 +3,7 @@
   "data": [
       {
         "username": "3******c",
-        "rateTime": 1469281964000,
+        "rateTime": "2016-07-23 21:52",
         "deliveryTime": 30,
         "score": 5,
         "rateType": 0,
@@ -19,7 +19,7 @@
       },
       {
         "username": "2******3",
-        "rateTime": 1469271264000,
+        "rateTime": "2016-07-23 21:52",
         "score": 4,
         "rateType": 0,
         "deliveryTime": "",
@@ -31,7 +31,7 @@
       },
       {
         "username": "3******b",
-        "rateTime": 1469261964000,
+        "rateTime": "2016-07-23 21:52",
         "score": 3,
         "rateType": 1,
         "text": "",
@@ -40,7 +40,7 @@
       },
       {
         "username": "1******c",
-        "rateTime": 1469261864000,
+        "rateTime": "2016-07-23 21:52",
         "deliveryTime": 20,
         "score": 5,
         "rateType": 0,
@@ -50,7 +50,7 @@
       },
       {
         "username": "2******d",
-        "rateTime": 1469251264000,
+        "rateTime": "2016-07-23 21:52",
         "deliveryTime": 10,
         "score": 4,
         "rateType": 0,
@@ -60,7 +60,7 @@
       },
       {
         "username": "9******0",
-        "rateTime": 1469241964000,
+        "rateTime": "2016-07-23 21:52",
         "deliveryTime": 70,
         "score": 1,
         "rateType": 1,

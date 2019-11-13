@@ -2,8 +2,7 @@
   <div id="app">
     <!-- 头部 -->
     <v-header :seller="seller"></v-header>
-    
-    <router-view  :seller="seller" />
+    <!-- <router-view  :seller="seller" /> -->
   </div>
 </template>
 
