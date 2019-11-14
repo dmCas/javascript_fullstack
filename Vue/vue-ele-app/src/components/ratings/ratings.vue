@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <div class="ratings">
       <!-- 商家信息 -->
       <div class="information-wrapper">
@@ -12,8 +12,8 @@
           <div class="score-wrapper">
             <span class="title">服务态度</span>
             <div class="star">
-              <span class="star-item"  :class="seller.serviceScore>1?'on':'off'"></span>
-              <span class="star-item"  :class="seller.serviceScore>2?'on':'off'"></span>
+              <span class="star-item" :class="seller.serviceScore>1?'on':'off'"></span>
+              <span class="star-item" :class="seller.serviceScore>2?'on':'off'"></span>
               <span class="star-item" :class="seller.serviceScore>3?'on':'off'"></span>
               <span class="star-item" :class="seller.serviceScore>4?'on':'off'"></span>
               <span class="star-item" :class="seller.serviceScore>4.5?'on':'off'"></span>
@@ -23,8 +23,8 @@
           <div class="score-wrapper">
             <span class="title">商品评分</span>
             <div class="star">
-              <span class="star-item"  :class="seller.foodScore>1?'on':'off'"></span>
-              <span class="star-item"  :class="seller.foodScore>2?'on':'off'"></span>
+              <span class="star-item" :class="seller.foodScore>1?'on':'off'"></span>
+              <span class="star-item" :class="seller.foodScore>2?'on':'off'"></span>
               <span class="star-item" :class="seller.foodScore>3?'on':'off'"></span>
               <span class="star-item" :class="seller.foodScore>4?'on':'off'"></span>
               <span class="star-item" :class="seller.foodScore>4.5?'on':'off'"></span>
@@ -32,20 +32,33 @@
             <span class="score">{{seller.foodScore}}</span>
           </div>
           <div class="delivery-wrapper">
-            <span class="title">送达时间</span> 
+            <span class="title">送达时间</span>
             <span class="delivery">{{seller.deliveryTime}}分钟</span>
-          </div>  
-        </div>   
+          </div>
+        </div>
       </div>
       <div class="split"></div>
       <!-- 条件选择 -->
       <div class="ratingSelect">
         <div class="rating-type">
-          <span class="block positive" :class="clickSelect1 ?  'active': ''" @click="selectOne()">全部<span class="count">24</span></span>
-          <span class="block positive" :class="clickSelect2 ?  'active': ''" @click="selectTwo()">满意<span class="count">18</span></span>
-          <span class="block negative" :class="clickSelect3 ?  'active2': ''" @click="selectThree()">不满意<span class="count">5</span></span>
+          <span class="block positive" :class="clickSelect1 ?  'active': ''" @click="selectOne()">
+            全部
+            <span class="count">24</span>
+          </span>
+          <span class="block positive" :class="clickSelect2 ?  'active': ''" @click="selectTwo()">
+            满意
+            <span class="count">18</span>
+          </span>
+          <span
+            class="block negative"
+            :class="clickSelect3 ?  'active2': ''"
+            @click="selectThree()"
+          >
+            不满意
+            <span class="count">5</span>
+          </span>
         </div>
-        <div class="switch">
+        <div class="switch" :class="on">
           <span class="icon-check_circle"></span>
           <div class="text">只看有内容的评价</div>
         </div>
@@ -53,25 +66,38 @@
       <!-- 展示评论 -->
       <div class="rating-wrapper">
         <ul>
-          <li
-          v-for="(items,index) in ratings" :key="index"
-          class="rating-item"
-          >
-          <!-- 用户头像 -->
-          <div class="avatar">
-            <img :src="ratings[index].avatar" alt="" width="28" height="28" style="border-radius:50%;">
-          </div>
-          <!-- 评论内容 -->
-          <div class="content">
-            <h1 class="name">{{ratings[index].username}}</h1>
-            <div class="star-wrapper"></div>
-            <p class="text">{{ratings[index].text}}</p>
-            <!-- 评论时间 -->
-            <div class="time">
-              {{ratings[index].rateTime}}
+          <li v-for="(items,index) in ratings" :key="index" class="rating-item">
+            <!-- 用户头像 -->
+            <div class="avatar">
+              <img
+                :src="ratings[index].avatar"
+                alt
+                width="28"
+                height="28"
+                style="border-radius:50%;"
+              />
             </div>
-          </div>
-
+            <!-- 评论内容 -->
+            <div class="content">
+              <h1 class="name">{{ratings[index].username}}</h1>
+              <div class="star-wrapper">
+                <el-rate
+                  v-model="value"
+                  disabled
+                  show-score
+                  text-color="#ff9900"
+                  :score-template="value[index]"
+                ></el-rate>
+              </div>
+              <p class="text">{{ratings[index].text}}</p>
+              <!-- 推荐 -->
+              <div class="recommend" v-if="ratings[index].recommend.length>0">
+                <span class="icon-thumb_up"></span>
+                <span class="item" v-for="(rmd,rmdIdx) in items.recommend" :key="rmdIdx+'rmd'">{{rmd}}</span>
+              </div>
+              <!-- 评论时间 -->
+              <div class="time">{{ratings[index].rateTime}}</div>
+            </div>
           </li>
         </ul>
       </div>
@@ -81,68 +107,74 @@
 
 <script>
 export default {
-  data (){
+  data() {
     return {
       ratings: [],
       seller: {},
       clickSelect1: true,
-      clickSelect2:false,
-      clickSelect3:false
-    }
+      clickSelect2: false,
+      clickSelect3: false,
+      value:[],
+      recommend: []
+    };
   },
-  created (){
-    this.$http.get('http://localhost:8080/static/ratings.json')
-    .then((res) => {
-        console.log(res)
-        if (res.data.errno == 0) {
-          this.ratings = res.data.data
-        }
-      }),
-     this.$http.get('http://localhost:8080/static/seller.json', {})
-      .then((res) => {
-        // console.log(res)
-        if (res.data.errno === 0) {
-          // this.seller = res.data.data
-          this.seller = Object.assign({}, this.seller, res.data.data)
-        }
-      })
+  created() {
+    let value = []
+    let recommend = []
+    this.$http.get("http://localhost:8080/static/ratings.json").then(res => {
+      console.log(res.data.data[0].score);
+      if (res.data.errno == 0) {
+        this.ratings = res.data.data;
+        for(let i=0;i<res.data.data.length;i++){
+          recommend.push(res.data.data[i].recommend)
+          value.push(res.data.data[i].score.toString())
+        } 
+      }
+      this.recommend = Object.assign([], recommend)
+      this.value = Object.assign([], value)
+      console.log(value)
+    }),
+      this.$http
+        .get("http://localhost:8080/static/seller.json", {})
+        .then(res => {
+          // console.log(res)
+          if (res.data.errno === 0) {
+            // this.seller = res.data.data
+            this.seller = Object.assign({}, this.seller, res.data.data);
+          }
+        });
   },
   methods: {
     selectOne() {
-      if(this.clickSelect1)
-      {
-        this.clickSelect1 = false
+      if (this.clickSelect1) {
+        this.clickSelect1 = false;
+      } else {
+        this.clickSelect1 = true;
+        this.clickSelect2 = false;
+        this.clickSelect3 = false;
       }
-      else{
-        this.clickSelect1 = true
-        this.clickSelect2 = false
-        this.clickSelect3 = false
-      }
-      console.log(this.ratings[1].avatar)
+      console.log(this.ratings[1].recommend.length);
     },
     selectTwo() {
-      if(this.clickSelect2)
-      {
-        this.clickSelect2 = false
-      }
-      else{
-        this.clickSelect2 = true
-         this.clickSelect1 = false
-         this.clickSelect3 = false
+      if (this.clickSelect2) {
+        this.clickSelect2 = false;
+      } else {
+        this.clickSelect2 = true;
+        this.clickSelect1 = false;
+        this.clickSelect3 = false;
       }
     },
-    selectThree(){
-      if(this.clickSelect3){
-        this.clickSelect3 = false
-      }
-      else{
-        this.clickSelect2 = false
-        this.clickSelect1 = false
-        this.clickSelect3 = true
+    selectThree() {
+      if (this.clickSelect3) {
+        this.clickSelect3 = false;
+      } else {
+        this.clickSelect2 = false;
+        this.clickSelect1 = false;
+        this.clickSelect3 = true;
       }
     }
   }
-}
+};
 </script>
 
 <style lang="stylus">
@@ -272,6 +304,8 @@ export default {
       border-bottom 1px solid rgba(7,17,27,.1)
       color #93999f
       font-size 0
+      &.on 
+        color #00c850
       .icon-check_circle
         font-family sell-icon!important
         speak none
@@ -291,6 +325,7 @@ export default {
         display inline-block
         vertical-align top
         font-size 12px
+        color #93999f
   .rating-wrapper 
     padding 0 18px
     .rating-item
@@ -311,6 +346,15 @@ export default {
           line-height 12px
           font-size 10px
           color #07111b
+        .star-wrapper
+          .el-rate
+            font-size 12px
+            position relative
+            left -2px
+            .el-rate__item
+              width 10px
+              height 10px
+              margin-right 3px
         .text
           margin-bottom 8px
           line-height 18px
@@ -323,9 +367,21 @@ export default {
           line-height 12px
           font-size 10px
           color #93999f
-
+        .recommend
+          line-height 16px
+          font-size 0
+          .icon-thumb_up,
+          .item 
+            display inline-block
+            margin 0 8px 4px 0
+            font-size 9px
+            font-family sell-icon!important
+            color #00a0dc
+          .item
+            padding 0 6px
+            border 1px solid rgba(7,17,27,.1)
+            border-radius 1px
+            color #93999f
+            background #fff
       
-
-
-
 </style>

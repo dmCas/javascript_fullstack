@@ -25,7 +25,9 @@ export default {
       } else {
         this.food.count++
       }
+      // 抛出add方法 event.target 点击点
       this.$emit('add', event.target)
+      //
     },
     decreaseCart () {
       if (this.food.count) {

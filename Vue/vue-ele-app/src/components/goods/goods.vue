@@ -59,6 +59,7 @@
     </div>
     <!-- 购物车 -->
     <shopcart
+      ref="shopcart"
       :selectFoods = "selectFoods"
       :deliveryPrice = "seller.deliveryPrice"
       :minPrice = "seller.minPrice"
@@ -158,8 +159,16 @@ export default {
         this.listHeight.push(height)
       }
     },
-    addFood () {
-
+    addFood (target) {
+      // console.log(target)
+      this._drop(target)
+    },
+    _drop(target){
+      // 体验优化， 异步执行下落动画
+      this.$nextTick(() => {
+        //父组件调用子组件方法
+        this.$refs.shopcart.drop(target)
+      })
     }
   }
 }
