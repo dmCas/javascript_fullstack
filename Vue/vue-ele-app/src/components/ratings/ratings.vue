@@ -43,11 +43,11 @@
         <div class="rating-type">
           <span class="block positive" :class="clickSelect1 ?  'active': ''" @click="selectOne()">
             全部
-            <span class="count">24</span>
+            <span class="count">{{ratings.length}}</span>
           </span>
-          <span class="block positive" :class="clickSelect2 ?  'active': ''" @click="selectTwo()">
+          <span class="block positive" :class="clickSelect2 ?  'active': ''" @click="selectTwo();ifPositive()" >
             满意
-            <span class="count">18</span>
+            <span class="count">{{positive.length}}</span>
           </span>
           <span
             class="block negative"
@@ -55,18 +55,18 @@
             @click="selectThree()"
           >
             不满意
-            <span class="count">5</span>
+            <span class="count">{{negative.length}}</span>
           </span>
         </div>
-        <div class="switch" :class="on">
+        <div class="switch" :class="{'on': watchSelect}" @click="shaixuan()">
           <span class="icon-check_circle"></span>
           <div class="text">只看有内容的评价</div>
         </div>
       </div>
       <!-- 展示评论 -->
-      <div class="rating-wrapper">
+      <div class="rating-wrapper" >
         <ul>
-          <li v-for="(items,index) in ratings" :key="index" class="rating-item">
+          <li v-for="(items,index) in ratings" :key="index" class="rating-item" v-show="ifShow(index)">
             <!-- 用户头像 -->
             <div class="avatar">
               <img
@@ -100,6 +100,8 @@
             </div>
           </li>
         </ul>
+        
+
       </div>
     </div>
   </div>
@@ -109,30 +111,50 @@
 export default {
   data() {
     return {
-      ratings: [],
+      ratings: {},
       seller: {},
       clickSelect1: true,
       clickSelect2: false,
       clickSelect3: false,
-      value:[],
-      recommend: []
+      value:3.9,
+      recommend: [],
+      watchSelect: false,
+      texts: [],
+      positive: [],
+      negative:[],
+      posTxt: false
     };
   },
   created() {
+    let texts = []
     let value = []
     let recommend = []
-    this.$http.get("http://localhost:8080/static/ratings.json").then(res => {
-      console.log(res.data.data[0].score);
+    let positive = []
+    let negative = []
+    this.$http.get("http://localhost:8080/static/ratings.json")
+    .then( (res) => {
+      // console.log(res.data.data[0].score);
       if (res.data.errno == 0) {
         this.ratings = res.data.data;
+        console.log(res)
         for(let i=0;i<res.data.data.length;i++){
           recommend.push(res.data.data[i].recommend)
-          value.push(res.data.data[i].score.toString())
+          // value.push(res.data.data[i].score.toString())
+          if(res.data.data[i].rateType === 0){
+            positive.push(res.data.data[i].text)
+          }
+          if(res.data.data[i].rateType === 1){
+            negative.push(res.data.data[i].text)
+          }
+          texts.push(res.data.data[i].text)
         } 
       }
       this.recommend = Object.assign([], recommend)
-      this.value = Object.assign([], value)
-      console.log(value)
+      // this.value = Object.assign([], value)
+      this.texts=Object.assign([], texts)
+      this.positive=Object.assign([], positive)
+      this.negative=Object.assign([], negative)
+      // console.log(value)
     }),
       this.$http
         .get("http://localhost:8080/static/seller.json", {})
@@ -147,17 +169,18 @@ export default {
   methods: {
     selectOne() {
       if (this.clickSelect1) {
-        this.clickSelect1 = false;
+        this.clickSelect1 =true;
       } else {
         this.clickSelect1 = true;
         this.clickSelect2 = false;
         this.clickSelect3 = false;
       }
-      console.log(this.ratings[1].recommend.length);
+      console.log(this.ratings);
+      console.log(this.ratings[0].text)
     },
     selectTwo() {
       if (this.clickSelect2) {
-        this.clickSelect2 = false;
+        this.clickSelect2 = true;
       } else {
         this.clickSelect2 = true;
         this.clickSelect1 = false;
@@ -166,11 +189,38 @@ export default {
     },
     selectThree() {
       if (this.clickSelect3) {
-        this.clickSelect3 = false;
+        this.clickSelect3 = true;
       } else {
         this.clickSelect2 = false;
         this.clickSelect1 = false;
         this.clickSelect3 = true;
+      }
+    },
+    shaixuan() {
+      if(this.watchSelect){
+        this.watchSelect = false
+      }
+      else {
+        this.watchSelect = true
+      }
+      console.log(this.watchSelect)
+    },
+    ifPositive(){
+      if(!this.posTxt){
+        this.posTxt = true
+      }
+      console.log("查看满意的评价"+ this.posTxt)
+    },
+    ifShow(index) {
+      if( !this.watchSelect ){
+        return true
+      }
+      if( this.watchSelect){
+        return this.texts[index] != ''
+      }
+      if(this.posTxt) {
+        return this.texts[index] = ''
+        console.log(123)
       }
     }
   }

@@ -11,7 +11,6 @@
     <child v-on:message="getMsg"></child>
   </div>
 </template>
-
 <script>
 import child from './child'
 export default {
