@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+  *{
+    padding: 0;
+    margin: 0;
+  }
+  .wrapper{
+    width: 100%;
+    height: 100vh;
+ 
+  }
+  .sky{
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(#a5dff9, white);
+    animation: changeColor 20s ease infinite;
+    position: relative;
+  }
+  @keyframes changeColor{
+    50%{
+      background: linear-gradient(orange, white);
+    }
+    60%{
+      background: linear-gradient(black, white);
+    }
+  }
+  .grass{
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(white, #99f19e);
+  }
+  .rabbit{
+    position: absolute;
+    left:88%;
+    top: 70%;
+  }
+  .rabbit img{
+    width: 150px;
+    height: 150px;
+  }
+  .cloud-one{
+    left: 600px;
+    width: 300px;
+    height: 200px;
+    position: relative;
+    display: inline-block;
+    animation: changebox 130s ease infinite;
+  }
+  @keyframes changebox{
+    100%{
+      left:-5000px;
+
+    }
+  }
+  .cloud-two{
+    left:800px;
+    transform: scale(0.8);
+    width: 300px;
+    height: 200px;
+    position: relative;
+    display: inline-block;
+    top: 15%;
+    animation: changebox 130s ease infinite;
+  }
+  .cloud-three{
+    transform: scale(0.9);
+    width: 300px;
+    left:300px; 
+    height: 200px;
+    position: absolute;
+    display: inline-block;
+    top: 25%;
+    animation: changebox 130s ease infinite;
+  }
+  .cloud-four{
+    left:500px; 
+    transform: rotateZ(3deg) scale(0.88);
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    display: inline-block;
+    top: 05%;
+    animation: changebox 130s ease infinite;
+  }
+  .cloud-five{
+    left:800px; 
+    transform: rotateZ(3deg) scale(0.88);
+    width: 300px;
+    height: 200px;
+    position: absolute;
+    display: inline-block;
+    top: 13%;
+    animation: changebox 130s ease infinite;
+  }
+  .cloud-left{
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    background: whitesmoke;
+    border-radius:50%;
+    transform: rotateZ(11deg)  scale(0.5);
+    left: 50px;
+    /* box-shadow: 200px 200px 50px 0px #fff; */
+    /* border-bottom: transparent; */
+  }
+  
+  .cloud-bottom{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top:30px;
+    left: 28px;
+    background: whitesmoke;
+    border-radius:50%;
+    transform: rotateZ(-12deg)  scale(0.4);
+  }
+  .cloud-right{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top:33px;
+    left: 110px;
+    background: whitesmoke;
+    border-radius:50%;
+    transform: rotateZ(15deg)  scale(0.3);
+  }
+  .cloud-top{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top:45px;
+    left: 18px;
+    background: whitesmoke;
+    border-radius:50%;
+    transform: rotateZ(15deg)  scale(0.4);
+  }
+  .cloud-container{
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    top:76px;
+    left: 68px;
+    border-radius: 0 0 50% 0;
+    background: whitesmoke;
+    /* border-radius:50%; */
+    /* transform: rotateZ(15deg)  scale(0.4); */
+  }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="sky">
+      <div class="cloud-one">
+        <div class="cloud-left"></div>
+        <div class="cloud-bottom"></div>
+        <div class="cloud-right"></div>
+        <div class="cloud-top"></div>
+        <div class="cloud-container"></div>
+      </div>
+      <div class="cloud-two">
+        <div class="cloud-left"></div>
+        <div class="cloud-bottom"></div>
+        <div class="cloud-right"></div>
+        <div class="cloud-top"></div>
+        <div class="cloud-container"></div>
+      </div>
+      <div class="cloud-three">
+        <div class="cloud-left"></div>
+        <div class="cloud-bottom"></div>
+        <div class="cloud-right"></div>
+        <div class="cloud-top"></div>
+        <div class="cloud-container"></div>
+      </div>
+      <div class="cloud-four">
+        <div class="cloud-left"></div>
+        <div class="cloud-bottom"></div>
+        <div class="cloud-right"></div>
+        <div class="cloud-top"></div>
+        
+        <div class="cloud-container"></div>
+      </div>
+      <div class="cloud-five">
+        <div class="cloud-left"></div>
+        <div class="cloud-bottom"></div>
+        <div class="cloud-right"></div>
+        <div class="cloud-top"></div>
+        <div class="cloud-container"></div>
+      </div>
+    </div>
+    <div class="grass">
+      <div class="rabbit" id="rabbit">
+        <img src="./48e0c6a832a47edd9cabfa702a39791f.png" alt="">
+      </div>
+    </div>
+  </div>
+  <script>
+    const Rabbit = document.getElementById('rabbit');
+    let up = true
+    Rabbit.addEventListener('click',()=>{
+        Rabbit.style.left = Rabbit.getBoundingClientRect().left - 100 +'px'
+        if(up){
+          Rabbit.style.top = Rabbit.getBoundingClientRect().top - 120 +'px'
+          up = false
+          console.log(123)
+        }
+        else{
+          Rabbit.style.top = Rabbit.getBoundingClientRect().top + 120 +'px'
+          up = true
+        }
+    })
+  </script>
+</body>
+</html>

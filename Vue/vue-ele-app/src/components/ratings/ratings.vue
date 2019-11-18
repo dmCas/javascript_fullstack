@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="ratings-wrapper" ref="ratingWrapper">
     <div class="ratings">
       <!-- 商家信息 -->
       <div class="information-wrapper">
@@ -41,18 +41,19 @@
       <!-- 条件选择 -->
       <div class="ratingSelect">
         <div class="rating-type">
-          <span class="block positive" :class="clickSelect1 ?  'active': ''" @click="selectOne()">
+          <span class="block positive" :class="clickSelect1 ?  'active': ''" @click="selectOne();showAll()">
             全部
             <span class="count">{{ratings.length}}</span>
           </span>
-          <span class="block positive" :class="clickSelect2 ?  'active': ''" @click="selectTwo();ifPositive()" >
+          <span class="block positive" :class="clickSelect2 ?  'active': ''" 
+            @click="selectTwo();ifPositive()" >
             满意
             <span class="count">{{positive.length}}</span>
           </span>
           <span
             class="block negative"
             :class="clickSelect3 ?  'active2': ''"
-            @click="selectThree()"
+            @click="selectThree();ifNegative()"
           >
             不满意
             <span class="count">{{negative.length}}</span>
@@ -64,7 +65,7 @@
         </div>
       </div>
       <!-- 展示评论 -->
-      <div class="rating-wrapper" >
+      <div class="rating-wrapper">
         <ul>
           <li v-for="(items,index) in ratings" :key="index" class="rating-item" v-show="ifShow(index)">
             <!-- 用户头像 -->
@@ -100,14 +101,13 @@
             </div>
           </li>
         </ul>
-        
-
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BScroll from 'better-scroll'
 export default {
   data() {
     return {
@@ -122,7 +122,9 @@ export default {
       texts: [],
       positive: [],
       negative:[],
-      posTxt: false
+      posTxt: false,
+      negTex: false,
+      All: true
     };
   },
   created() {
@@ -136,6 +138,10 @@ export default {
       // console.log(res.data.data[0].score);
       if (res.data.errno == 0) {
         this.ratings = res.data.data;
+        this.$nextTick(() => {
+          console.log(this.$el);
+          this._initScroll()
+          })
         console.log(res)
         for(let i=0;i<res.data.data.length;i++){
           recommend.push(res.data.data[i].recommend)
@@ -167,6 +173,11 @@ export default {
         });
   },
   methods: {
+    _initScroll(){
+      this.menuScroll = new BScroll(this.$refs.ratingWrapper, {
+        click: true
+      })
+    },
     selectOne() {
       if (this.clickSelect1) {
         this.clickSelect1 =true;
@@ -205,22 +216,62 @@ export default {
       }
       console.log(this.watchSelect)
     },
+    showAll(){
+      this.All = true
+      this.posTxt = false
+      this.negTxt = false
+    },
     ifPositive(){
       if(!this.posTxt){
         this.posTxt = true
+        this.negTxt = false
+        this.All = false
       }
       console.log("查看满意的评价"+ this.posTxt)
     },
-    ifShow(index) {
-      if( !this.watchSelect ){
-        return true
+    ifNegative(){
+      if(!this.negTxt){
+        this.negTxt = true
+        this.posTxt = false
+        this.All = false
       }
-      if( this.watchSelect){
+      console.log("查看差评"+ this.negTxt)
+    },
+    ifShow(index) {
+      if(this.posTxt && this.watchSelect) {
+        console.log("获得有内容的好评")
+        return this.ratings[index].rateType === 0 && this.texts[index] != ''
+      }
+      else if(this.posTxt) {
+        console.log("成功获得满意评价")
+        return this.ratings[index].rateType === 0 
+      }
+      else if(this.negTxt && this.watchSelect) {
+        console.log("获得有内容的差评")
+        return this.ratings[index].rateType === 1 && this.texts[index] != ''
+      }
+      else if(this.negTxt) {
+        console.log("这是差评")
+        return this.ratings[index].rateType === 1 
+      } 
+      else if(this.All && this.watchSelect){
+        console.log("查看有内容的评价")
         return this.texts[index] != ''
       }
-      if(this.posTxt) {
-        return this.texts[index] = ''
-        console.log(123)
+      else if(this.All){
+        console.log("查看所有")
+        return true
+      }
+      else if(!this.watchSelect){
+        console.log("this.negTex"+this.negTex)
+        return true
+      }
+      else if(this.watchSelect){
+        return this.texts[index] != ''
+      }
+      else {
+        console.log(32322)
+        return
       }
     }
   }
@@ -228,210 +279,211 @@ export default {
 </script>
 
 <style lang="stylus">
-.ratings
-  html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, menu, nav, output, ruby, section, summary, time, mark, audio, video, input
-    margin 0
-    padding 0
-    border 0
-    font-size 100%
-    font-weight normal
-    vertical-align baseline
-  span 
-    vertical-align baseline
-  .information-wrapper
-    display flex
-    padding 18px 0
-    .left-info
-      flex 0 0  137px
-      padding 6px 0
-      width 137px
-      border-right 1px solid rgba(7, 17, 27 ,.1)
-      text-align center
-      .score
-        margin-bottom 6px
-        line-height 28px
-        font-size 24px
-        color #f90
-      .title
-        margin-bottom 6px
-        line-height 12px
-        font-size 12px
-        color #07111b
-      .rank
-        line-height 10px
-        font-size 10px
-        color #93999f
-    .right-info
-      flex 1
-      padding 6px 0 6px 24px
-      .score-wrapper
-        margin-bottom 6px
-        font-size 0
-        .title
-          display inline-block
-          line-height 18px
-          vertical-align middle
-          font-size 12px
-          color #07111b
-        .star
-          display inline-block
-          margin 0 12px
-          vertical-align middle
-          .star-item
-            width 15px
-            height 15px
-            margin-right 6px
-            background-size 15px 15px
-            display inline-block
-            background-repeat no-repeat
-          .on 
-            background-image url('./star.png')
-          .off
-            background-image url('./star1.png')
-        .score
-          display inline-block
-          line-height 18px
-          vertical-align top
-          font-size 12px
-          color #f90
-      .delivery-wrapper
-        font-size 0
-        .title
-          display inline-block
-          line-height 18px
-          vertical-align middle
-          font-size 12px
-          color #07111b
-        .delivery
-          margin-left 12px
-          font-size 12px
-          color #93999f
-          vertical-align middle
-  .split
-    width 100%
-    height 16px
-    border-top 1px solid rgba(7,17,27,.1)
-    border-bottom 1px solid rgba(7,17,27,.1)
-    background #f3f5f7
-  .ratingSelect
-    .rating-type
-      padding 18px 0
-      margin 0 18px
-      position relative
-      font-size 0
-      &:after
-        display block
-        position absolute
-        left 0
-        bottom 0
-        width 100%
-        border-top 1px solid rgba(7,17,27,.1)
-        content " "
-      .block
-        display inline-block
-        padding 8px 12px
-        margin-right 8px
-        line-height 16px
-        border-radius 1px
-        font-size 12px
-        .count 
-          margin-left 2px
-          font-size 8px
-      .positive
-        background-color rgba(0,160,220,.2)
-        color black
-      .active
-        background-color #00a0dc
-        color #Fff
-      .negative
-        background-color rgba(77,85,93,.2)
-      .active2
-        background-color #4d555d
-        color white
-    .switch
-      padding 12px 18px
-      line-height 24px
-      border-bottom 1px solid rgba(7,17,27,.1)
-      color #93999f
-      font-size 0
-      &.on 
-        color #00c850
-      .icon-check_circle
-        font-family sell-icon!important
-        speak none
-        font-style normal
-        font-weight 400
-        font-variant normal
-        text-transform none
-        line-height 1
-        -webkit-font-smoothing antialiased
-        display inline-block
-        vertical-align top
-        margin-right 4px
-        font-size 24px
-      .on 
-        background-color #00c850
-      .text
-        display inline-block
-        vertical-align top
-        font-size 12px
-        color #93999f
-  .rating-wrapper 
-    padding 0 18px
-    .rating-item
+.ratings-wrapper
+  position absolute
+  top 174px
+  bottom 0
+  left 0
+  width 100%
+  z-index -999
+  overflow hidden
+  .ratings
+    span 
+      vertical-align baseline
+    .information-wrapper
       display flex
       padding 18px 0
-      position relative
-      .avatar
-        flex 0 0 28px
-        width 28px
-        margin-right 12px
-      .content
-        position relative
-        -webkit-box-flex 1
-        -ms-flex 1
-        flex 1
-        .name
-          margin-bottom 4px
+      .left-info
+        flex 0 0  137px
+        padding 6px 0
+        width 137px
+        border-right 1px solid rgba(7, 17, 27 ,.1)
+        text-align center
+        .score
+          margin-bottom 6px
+          line-height 28px
+          font-size 24px
+          color #f90
+        .title
+          margin-bottom 6px
           line-height 12px
-          font-size 10px
-          color #07111b
-        .star-wrapper
-          .el-rate
-            font-size 12px
-            position relative
-            left -2px
-            .el-rate__item
-              width 10px
-              height 10px
-              margin-right 3px
-        .text
-          margin-bottom 8px
-          line-height 18px
-          color #07111b
           font-size 12px
-        .time
-          position absolute
-          top 0
-          right 0
-          line-height 12px
+          color #07111b
+        .rank
+          line-height 10px
           font-size 10px
           color #93999f
-        .recommend
-          line-height 16px
+      .right-info
+        flex 1
+        padding 6px 0 6px 24px
+        .score-wrapper
+          margin-bottom 6px
           font-size 0
-          .icon-thumb_up,
-          .item 
+          .title
             display inline-block
-            margin 0 8px 4px 0
-            font-size 9px
-            font-family sell-icon!important
-            color #00a0dc
-          .item
-            padding 0 6px
-            border 1px solid rgba(7,17,27,.1)
-            border-radius 1px
+            line-height 18px
+            vertical-align middle
+            font-size 12px
+            color #07111b
+          .star
+            display inline-block
+            margin 0 12px
+            vertical-align middle
+            .star-item
+              width 15px
+              height 15px
+              margin-right 6px
+              background-size 15px 15px
+              display inline-block
+              background-repeat no-repeat
+            .on 
+              background-image url('./star.png')
+            .off
+              background-image url('./star1.png')
+          .score
+            display inline-block
+            line-height 18px
+            vertical-align top
+            font-size 12px
+            color #f90
+        .delivery-wrapper
+          font-size 0
+          .title
+            display inline-block
+            line-height 18px
+            vertical-align middle
+            font-size 12px
+            color #07111b
+          .delivery
+            margin-left 12px
+            font-size 12px
             color #93999f
-            background #fff
+            vertical-align middle
+    .split
+      width 100%
+      height 16px
+      border-top 1px solid rgba(7,17,27,.1)
+      border-bottom 1px solid rgba(7,17,27,.1)
+      background #f3f5f7
+    .ratingSelect
+      .rating-type
+        padding 18px 0
+        margin 0 18px
+        position relative
+        font-size 0
+        &:after
+          display block
+          position absolute
+          left 0
+          bottom 0
+          width 100%
+          border-top 1px solid rgba(7,17,27,.1)
+          content " "
+        .block
+          display inline-block
+          padding 8px 12px
+          margin-right 8px
+          line-height 16px
+          border-radius 1px
+          font-size 12px
+          .count 
+            margin-left 2px
+            font-size 8px
+        .positive
+          background-color rgba(0,160,220,.2)
+          color black
+        .active
+          background-color #00a0dc
+          color #Fff
+        .negative
+          background-color rgba(77,85,93,.2)
+        .active2
+          background-color #4d555d
+          color white
+      .switch
+        padding 12px 18px
+        line-height 24px
+        border-bottom 1px solid rgba(7,17,27,.1)
+        color #93999f
+        font-size 0
+        &.on 
+          color #00c850
+        .icon-check_circle
+          font-family sell-icon!important
+          speak none
+          font-style normal
+          font-weight 400
+          font-variant normal
+          text-transform none
+          line-height 1
+          -webkit-font-smoothing antialiased
+          display inline-block
+          vertical-align top
+          margin-right 4px
+          font-size 24px
+        .on 
+          background-color #00c850
+        .text
+          display inline-block
+          vertical-align top
+          font-size 12px
+          color #93999f
+    .rating-wrapper 
+      padding 0 18px
+      .rating-item
+        display flex
+        padding 18px 0
+        position relative
+        .avatar
+          flex 0 0 28px
+          width 28px
+          margin-right 12px
+        .content
+          position relative
+          -webkit-box-flex 1
+          -ms-flex 1
+          flex 1
+          .name
+            margin-bottom 4px
+            line-height 12px
+            font-size 10px
+            color #07111b
+          .star-wrapper
+            .el-rate
+              font-size 12px
+              position relative
+              left -2px
+              .el-rate__item
+                width 10px
+                height 10px
+                margin-right 3px
+          .text
+            margin-bottom 8px
+            line-height 18px
+            color #07111b
+            font-size 12px
+          .time
+            position absolute
+            top 0
+            right 0
+            line-height 12px
+            font-size 10px
+            color #93999f
+          .recommend
+            line-height 16px
+            font-size 0
+            .icon-thumb_up,
+            .item 
+              display inline-block
+              margin 0 8px 4px 0
+              font-size 9px
+              font-family sell-icon!important
+              color #00a0dc
+            .item
+              padding 0 6px
+              border 1px solid rgba(7,17,27,.1)
+              border-radius 1px
+              color #93999f
+              background #fff
       
 </style>
