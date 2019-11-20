@@ -20,7 +20,6 @@ const actions = {
   //一定要放入参数context 代表执行上下文
   addAction (context, status) {
     //add()成为异步方法
-    
     context.commit('add', status)
   },
   reduceAction ({commit}){
