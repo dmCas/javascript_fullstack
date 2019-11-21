@@ -33,9 +33,10 @@ export default {
     text-align center
     .tab-link
       padding-bottom 5px
-      color hsla(0, 0%, 100%, .5)
+      color #a3a1a1
     &.router-link-active
       .tab-link
-        color #ea2448
+        color #000
+        font-size 18px
         border-bottom 2px solid #ea2448
 </style>

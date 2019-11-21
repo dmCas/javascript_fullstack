@@ -8,7 +8,7 @@ const vue = new Vue()
 // axios设置
 // 超过10s则不再请求
 axios.defaults.timeout = 10000
-axios.defaults.baseURL = 'http://loaclhost:3000'
+axios.defaults.baseURL = 'http://localhost:3000'
 
 // axios配置
 // 判断返回状态,响应拦截
@@ -53,5 +53,9 @@ export default {
   },
   DiscLists (params) {
     return fetchGet('/top/playlist', params)
+  },
+  //热搜榜
+  HotSearchKey (){
+    return fetchGet('/search/hot')
   }
 }

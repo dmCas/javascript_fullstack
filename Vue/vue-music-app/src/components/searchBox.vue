@@ -7,6 +7,8 @@
 </template>
 
 <script>
+//引入util.js中方法
+import { debounce } from '@/common/util'
 export default {
   props: {
     placeholder: {
@@ -20,7 +22,9 @@ export default {
     }
   },
   created() {
-    this.$watch('query', fn)
+    this.$watch('query', debounce((newQuery) => {
+      this.$emit('query', newQuery)
+    }, 300))
   }
 }
 </script>
@@ -34,7 +38,7 @@ export default {
   width 100%
   padding 0 px2rem(8px)
   height px2rem(74px)
-  background #2f3054
+  background #f0f5f9
   border-radius 6px
   .icon-search 
     font-size 24px
@@ -43,8 +47,8 @@ export default {
     flex 1
     margin 0 5px
     line-height px2rem(36px)
-    background #2f3054
-    color #fff
+    background #f0f5f9
+    color #000
     font-size 14px
     outline 0
     &:placeholder 

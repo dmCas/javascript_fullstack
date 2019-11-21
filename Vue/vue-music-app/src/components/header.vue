@@ -50,7 +50,7 @@ export default {
     flex 1
     text-align center
     font-size 18px
-    color #ffffff
+    color #333030
     font-weight 500
     overflow hidden
     text-overflow ellipsis

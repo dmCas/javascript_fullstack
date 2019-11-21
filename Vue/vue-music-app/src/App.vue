@@ -40,14 +40,14 @@ export default {
 
 .icon
   font-family "icon" !important
-  font-size 18px
+  font-size 20px
   font-style normal
-  color #ffffff
+  color #090707
 html,body
   line-height 1
   font-family PingFang SC, STHeitiSC-Light, Helvetica-Light, arial, sans-serif
   user-select none
   -webkit-tap-highlight-color transparent
-  background rgba(8, 5, 58, 0.9)
-  color #fff
+  background #F8FAFF
+  color #000
 </style>
