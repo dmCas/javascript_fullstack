@@ -57,5 +57,9 @@ export default {
   //热搜榜
   HotSearchKey (){
     return fetchGet('/search/hot')
+  },
+  //歌曲搜索
+  MusicSearch (params){
+    return fetchGet('/search', params)
   }
 }

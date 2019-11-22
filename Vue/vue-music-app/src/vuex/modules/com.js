@@ -6,14 +6,20 @@ const state = {
   searchHistory: ['我曾', '许嵩']
 }
 
-
-
 const mutations = {
   [types.COM_SHOW_SIDE_BAR](state, status) {
     state.showSidebar = status
   },
   [types.COM_SAVE_SEARCH_HISTORY](state, status) {
     state.searchHistory = status
+  },
+  //import * as types from '../types' 将所有作为一个名为types的对象
+  [types.COM_DELETE_SEARCH_HISTORY](state, index){
+    console.log(state)
+    state.searchHistory.splice(index, 1)
+  },
+  [types.COM_DELETE_ALLSEARCH_HISTORY](state){
+    state.searchHistory = []
   }
 }
 
@@ -27,6 +33,12 @@ const actions = {
     //数组去重
     searchHistory = [...new Set(searchHistory)]
     commit(types.COM_SAVE_SEARCH_HISTORY, searchHistory)
+  },
+  deleteSearchHistory ({commit}, index) {
+    commit(types.COM_DELETE_SEARCH_HISTORY, index)
+  },
+  deleteAllSearchHistory({commit}){
+    commit(types.COM_DELETE_ALLSEARCH_HISTORY)
   }
 }
 
