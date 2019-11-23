@@ -23,11 +23,13 @@ export const searchMixin =  {
     saveSearch ( song ){
       this.$refs.searchBox.setQuery(song) 
       this.saveSearchHistory(this.query)
+      // this.selectPlaySong(song)
     },
     ...mapActions([
       'saveSearchHistory',
       'deleteSearchHistory',
-      'deleteAllSearchHistory'
+      'deleteAllSearchHistory',
+      'selectPlaySong'
     ])
   }
 }

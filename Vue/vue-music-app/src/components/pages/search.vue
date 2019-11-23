@@ -5,7 +5,7 @@
       <v-search-box @query="onQueryChange" ref="searchBox"></v-search-box>
     </div>
     <!-- 热门搜索和搜索历史 -->
-    <div class="shortcut-wrapper">
+    <div class="shortcut-wrapper" v-show="!query">
       <v-scroll class="shortcut" :data="shortcut" ref="shortcut">
         <div>
           <!-- 热门搜索 -->
@@ -28,14 +28,14 @@
             <!-- 搜索历史列表 -->
             <v-search-list :searches="searchHistory" @select="saveSearch" @delete="deleteSearchHistory"></v-search-list>
             <!-- 搜索result -->
-            <div class="search-result">
-              <v-suggest :query="query">
-
-              </v-suggest>
-            </div>
+            
           </div>
         </div>
       </v-scroll>
+    </div>
+    <div class="search-result" v-show="query">
+      <v-suggest :query="query" @select="saveSearch" @listScroll="blurInput" ref="suggest">
+      </v-suggest>
     </div>
   </div>
 </template>

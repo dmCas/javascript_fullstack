@@ -96,6 +96,47 @@ export default {
           this.$emit('scroll', pos)
         })
       }
+      //是否派发上拉加载
+      if (this.pullup) {
+        //监听 页面滑倒底 触发scrollEnd的回调方法
+        this.scroll.on('scrollEnd', () => {
+          if(this.scroll.y <= (this.scroll.maxScrollY +50)){
+            this.$emit('scrollToEnd')
+          }
+        })
+      }
+
+      //是否派发下拉刷新事件
+      if(this.pulldown) {
+        this.scroll.on('touchend', (pos) => {
+          if (pos.y>50) {
+            this.$emit('pulldown')
+          }
+        })
+      }
+
+      //是否派发列表滚动开始事件
+      if (this.beforeScroll) {
+        this.scroll.on('beforeScrollStart', () => {
+          this.$emit ('beforeScroll')
+        })
+      }
+    },
+    disable() {
+      // 代理better-scroll的disable方法
+      this.scroll && this.scroll.disable()
+    },
+    enable() {
+      // 代理better-scroll的enable方法
+      this.scroll && this.scroll.enable()
+    },
+    scrollTo() {
+      // 代理better-scroll的scrollTo方法
+      this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
+    },
+    scrollToElement() {
+      // 代理better-scroll的scrollToElement方法
+      this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
     },
     refresh() {
       //refresh() 是better-scroll自带的方法
