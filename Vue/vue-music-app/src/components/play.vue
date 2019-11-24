@@ -12,7 +12,7 @@
           <h1 class="title" v-html="currentSong.name"></h1>
           <h2 class="subtitle" v-html="(currentSong.ar && currentSong.ar[0].name) || (currentSong.artists && currentSong.artists[0].name)"></h2>
         </div>
-        <div class="middle">
+        <div class="middle" @click="paused()">
           <div class="middle-l">
             <div class="cd-wrapper" ref="cdWrapper">
               <div class="cd" ref="imageWrapper">
@@ -30,6 +30,7 @@
             </div>
           </div>
         </div>
+        <div class="foot"></div>
       </div>
     </transition>
     <!-- 播放器 -->
@@ -65,7 +66,9 @@ export default {
     error (){},
     updateTime (){},
     end(){},
-    paused(){}
+    paused(){
+
+    }
   },
   watch: {
     async currentSong (newSong, oldSong) {
@@ -74,9 +77,7 @@ export default {
       }
       if (!newSong.url) {
         // alert('请求音乐出错')
-
         const { data, code } = await api.MusicUrl(newSong.id)
-        
         if (data && code === 200) {
           // console.log(data)
           newSong = {...newSong, url:data[0].url}
@@ -94,6 +95,14 @@ export default {
 
 <style lang="stylus" scoped>
 @import "../assets/css/function"
+@font-face 
+  font-family: 'iconfont';  /* project id 1522223 */
+  src url('//at.alicdn.com/t/font_1522223_wcx19o3il4.eot')
+  src url('//at.alicdn.com/t/font_1522223_wcx19o3il4.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1522223_wcx19o3il4.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1522223_wcx19o3il4.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1522223_wcx19o3il4.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1522223_wcx19o3il4.svg#iconfont') format('svg')
 .player
   z-index 150
   .normal-player
@@ -152,7 +161,7 @@ export default {
     .middle
       position fixed
       width 100%
-      top px2rem(180px)
+      top px2rem(200px)
       bottom px2rem(340px)
       white-space nowrap
       font-size 0
