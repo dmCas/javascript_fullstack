@@ -30,7 +30,25 @@
             </div>
           </div>
         </div>
-        <div class="foot"></div>
+        <div class="foot">
+          <ul>
+            <li class="icon">
+              <i class="iconfont">&#xe60a;</i>
+            </li>
+            <li class="icon">
+              <i class="iconfont">&#xe605;</i>
+            </li>
+            <li class="icon">
+              <i class="iconfont">&#xe78d;</i>
+            </li>
+            <li class="icon">
+              <i class="iconfont">&#xe70e;</i>
+            </li>
+            <i class="icon">
+              <i class="iconfont">&#xe64d;</i>
+            </i>
+          </ul>
+        </div>
       </div>
     </transition>
     <!-- 播放器 -->
@@ -41,7 +59,6 @@
       @timeupdate="updateTime"
       @ended="end"
       @pause="paused">
-
     </audio>
   </div>
 </template>
@@ -96,13 +113,20 @@ export default {
 <style lang="stylus" scoped>
 @import "../assets/css/function"
 @font-face 
-  font-family: 'iconfont';  /* project id 1522223 */
-  src url('//at.alicdn.com/t/font_1522223_wcx19o3il4.eot')
-  src url('//at.alicdn.com/t/font_1522223_wcx19o3il4.eot?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_1522223_wcx19o3il4.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_1522223_wcx19o3il4.woff') format('woff'),
-  url('//at.alicdn.com/t/font_1522223_wcx19o3il4.ttf') format('truetype'),
-  url('//at.alicdn.com/t/font_1522223_wcx19o3il4.svg#iconfont') format('svg')
+  font-family 'iconfont'  /* project id 1522223 */
+  src url('//at.alicdn.com/t/font_1522223_18h0md6o20u.eot')
+  src url('//at.alicdn.com/t/font_1522223_18h0md6o20u.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1522223_18h0md6o20u.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1522223_18h0md6o20u.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1522223_18h0md6o20u.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1522223_18h0md6o20u.svg#iconfont') format('svg')
+.iconfont
+  font-family "iconfont" !important
+  font-size px2rem(60px)
+  font-style normal
+  -webkit-font-smoothing antialiased
+  -webkit-text-stroke-width 0.2px
+  color white
 .player
   z-index 150
   .normal-player
@@ -122,7 +146,6 @@ export default {
       z-index -1
       opacity 0.6
       filter blur(20px)
-
     .top
       position relative
       margin-bottom 25px
@@ -138,8 +161,6 @@ export default {
           padding 0 px2rem(30px)
           font-size 22px
           color #fff
-
-
       .title
         width 70%
         margin 0 auto
@@ -150,14 +171,11 @@ export default {
         white-space nowrap
         font-size 18px
         color #fff
-
       .subtitle
         line-height px2rem(40px)
         text-align center
         font-size 14px
         color #fff
-
-
     .middle
       position fixed
       width 100%
@@ -193,12 +211,8 @@ export default {
               box-sizing border-box
               border-radius 50%
               border 10px solid rgba(255, 255, 255, 0.1)
-
             .play
               animation rotate 20s linear infinite
-
-
-
         .playing-lyric-wrapper
           width 80%
           margin 30px auto 0 auto
@@ -209,9 +223,6 @@ export default {
             line-height px2rem(40px)
             font-size 14px
             color hsla(0, 0%, 100%, 0.5)
-
-
-
       .middle-r
         display inline-block
         vertical-align top
@@ -234,240 +245,18 @@ export default {
           .pure-music
             padding-top 50%
             line-height px2rem(64px)
-            color hsla(0, 0%, 100%, 0.5)
+            // color hsla(0, 0%, 100%, 0.5)
             font-size 14px
-
-
-
-
-    .bottom
-      position absolute
-      bottom px2rem(200px)
-      width 100%
-      .dot-wrapper
-        text-align center
-        font-size 0
-        .dot
-          display inline-block
-          vertical-align middle
-          margin 0 px2rem(8px)
-          width px2rem(16px)
-          height px2rem(16px)
-          border-radius 50%
-          background hsla(0, 0%, 100%, 0.5)
-          &.active
-            width px2rem(40px)
-            border-radius px2rem(10px)
-            background hsla(0, 0%, 100%, 0.8)
-
-
-
-      .progress-wrapper
-        display flex
-        justify-content space-between
-        align-items center
-        width 80%
-        margin 0px auto
-        padding 10px 0
-        .time
-          color #fff
-          font-size 12px
-          flex 0 0 30px
-          line-height px2rem(60px)
-          width px2rem(60px)
-          &.time-l
-            text-align left
-
-          &.time-r
-            text-align right
-
-
-        .progress-bar-wrapper
-          // width
-          position absolute
-          left 0
-          right 0
-          top 0
-
-
-      .operators-box
-        width px2rem(1200px)
-        height px2rem(1200px)
-        position absolute
-        top px2rem(80px)
-        left 50%
-        transform translate3d(-50%, 0, 0)
-        overflow hidden
-        z-index -1
-        &after
-          content ''
-          width 100%
-          height 100%
-          background #ea2448
-          position absolute
-          clip rect(0 px2rem(600px) px2rem(1200px) 0)
-          transform rotate(90deg)
-          border-radius 50%
-
-
-      .operators
-        position absolute
-        top px2rem(70px)
-        display flex
-        width px2rem(660px)
-        height px2rem(132px)
-        margin-left 50%
-        transform translate3d(-50%, 0, 0)
-        align-items center
-        z-index 100
-
-        .icon-box
-          flex 1
-          height 100%
-          display flex
-          justify-content center
-          align-items center
-          &.disable
-            color #222
-
-          i
-            font-size 26px
-
-
-        .i-left
-          text-align right
-
-        .i-center
-          margin 0 px2rem(20px)
-          > div
-            width px2rem(120px)
-            height px2rem(120px)
-            display flex
-            align-items center
-            justify-content center
-            border-radius 50%
-            background #fff
-            .icon
-              margin-top px2rem(4px)
-              font-size 30px
-              display inline-block
-              color #4436b1
-              &.icon-pause
-                margin px2rem(10px) 0 0 px2rem(10px)
-
-
-
-
-        .i-right
-          text-align left
-
-
-
-    &.normal-enter-active,
-    &.normal-leave-active
-      transition all 0.4s
-      .top,
-      .bottom
-        transition all 0.4s cubic-bezier(0.86, 0.18, 0.82, 1.32)
-
-
-    &.normal-enter,
-    &.normal-leave-to
-      opacity 0
-      .top
-        transform translate3d(0, -100px, 0)
-
-      .bottom
-        transform translate3d(0, 100px, 0)
-
-
-
-
-  .mini-player
-    display flex
-    align-items center
-    position fixed
-    left 0
-    bottom px2rem(5px)
-    z-index 180
-    width 100%
-    height px2rem(105px)
-    background #ea2448
-    &.mini-enter-active,
-    &.mini-leave-active
-      transition all 0.4s
-
-    &.mini-enter,
-    &.mini-leave-to
-      opacity 0
-
-    .picture
-      flex 0 0 px2rem(80px)
-      width px2rem(80px)
-      height px2rem(80px)
-      padding 0 px2rem(20px) 0 px2rem(40px)
-      .imgWrapper
-        height 100%
-        width 100%
-        img
-          border-radius 50%
-          &.play
-            animation rotate 10s linear infinite
-
-          &.pause
-            animation-play-state paused
-
-
-
-
-
-    .text
-      display flex
-      flex-direction column
-      justify-content center
-      flex 1
-      line-height px2rem(40px)
-      overflow hidden
-      .name
-        margin-bottom 2px
-        text-overflow ellipsis
-        overflow hidden
-        white-space nowrap
-        font-size 14px
-        color #fff
-
-      .desc
-        text-overflow ellipsis
-        overflow hidden
-        white-space nowrap
-        font-size 12px
-        color hsla(0, 0%, 100%, 0.3)
-
-
-    .control
-      flex 0 0 px2rem(60px)
-      width px2rem(60px)
+    .foot
+      padding px2rem(60px) px2rem(10px)
       text-align center
-      padding 0 px2rem(20px)
-      .icon
-        font-size 30px
-        color #fff
+      width 100%
+      bottom px2rem(100px)
+      position absolute
+      ul 
+        display flex
+        .icon 
+          flex 1
+          justify-content center
 
-
-    .bottom-progress-bar
-      position fixed
-      left 0
-      right 0
-      bottom 0
-      height px2rem(6px)
-      background #fe7498
-      .bottom-progress
-        height 100%
-        background linear-gradient(#902541, #902444)
-@keyframes rotate
-  0%
-    transform rotate(0)
-
-  100%
-    transform rotate(360deg)
 </style>

@@ -51,6 +51,6 @@ html,body
   font-family PingFang SC, STHeitiSC-Light, Helvetica-Light, arial, sans-serif
   user-select none
   -webkit-tap-highlight-color transparent
-  background #F8FAFF
+  background #fff
   color #000
 </style>

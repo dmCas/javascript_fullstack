@@ -65,5 +65,9 @@ export default {
   // 根据id获取歌曲的url
   MusicUrl(id){
     return fetchGet('/song/url', {id})
+  },
+  //歌单
+  MusicPlayList(){
+    return fetchGet('/top/playlist')
   }
 }

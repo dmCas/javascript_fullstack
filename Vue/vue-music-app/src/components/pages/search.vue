@@ -1,7 +1,7 @@
 <template>
   <div class="search">
     <div class="search-box-wrapper">
-      <!-- 从组件接受query方法并取名为onQueryChange -->
+      <!-- 从子组件接受query方法并取名为onQueryChange -->
       <v-search-box @query="onQueryChange" ref="searchBox"></v-search-box>
     </div>
     <!-- 热门搜索和搜索历史 -->
