@@ -1,12 +1,17 @@
 <template>
   <div id="app">
+    <v-loading></v-loading>
     <router-view/>
   </div>
 </template>
 
 <script>
+import Loading from '@/components/loading'
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    "v-loading": Loading
+  }
 }
 </script>
 

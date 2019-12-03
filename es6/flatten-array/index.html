@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    
+    // var arr = [1, [2]]
+    // var farr = [].concat(arr[0]).concat(arr[1]);
+    // console.log(farr)
+    var arr = [1, [2, [3, 4]]]
+    function flattenArr(arr) {
+      let result = []
+      for(let i = 0; i<arr.length; i++){
+        // 存在数组套数组
+        if(Array.isArray(arr[i])){
+          result = result.concat(flattenArr(arr[i]))
+        }
+        else{
+          result.push(arr[i])
+        }
+      }
+      return result
+    }
+
+    function flattenArr(arr){
+      return arr.reduce((pre, next) => {
+        if(Array.isArray(next)) {
+          return pre.concat(flattenArr(next))
+        }
+        else {
+          pre.push(next);
+          return pre;
+        }
+      })
+    }
+    console.log(flattenArr(arr))
+  </script>
+</body>
+</html>

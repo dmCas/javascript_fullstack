@@ -17,11 +17,13 @@ let allServies = {
       pool.getConnection(function (err, connection) {
         if (err) {
           reject(err)
-        } else {
+        } 
+        else {
           connection.query(sql, values, (err, rows) => {
             if (err) {
               reject(err)
-            } else {
+            } 
+            else {
               resolve(rows)
             }
             connection.release() //释放连接池
@@ -38,6 +40,13 @@ let getAllUsers = function () {
   return allServies.query(_sql)
 }
 
+// 用户登录
+let userLogin = function (username, userpwd){
+  let _sql = `select * from users where username="${username}" and userpwd="${userpwd}"`
+  return allServies.query(_sql)
+}
+
 module.exports = {
-  getAllUsers
+  getAllUsers,
+  userLogin
 }
