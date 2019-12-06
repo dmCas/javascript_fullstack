@@ -18,34 +18,32 @@ router.get('/all', async(ctx, next) => {
     ctx.body = res
   })
 })
-
 // 登录
-router.post('/userLogin', async(ctx, next) =>{
-  //取到前端传过来的key值需为username
-  var _username = ctx.request.body.username 
+router.post('/userLogin', async (ctx, next) => {
+  var _username = ctx.request.body.username
   var _userpwd = ctx.request.body.userpwd
-  
+  console.log(_username, _userpwd)
+
   await userService.userLogin(_username, _userpwd)
-  .then((res) => { //res代表查询之后返回的内容
+  .then( res => {
     let r = ''
-    // console.log(res)
-    if(res.length){
-      r='ok';
+    // console.log(res);
+    if(res.length) {
+      r = 'ok';
       let result = {
         id: res[0].id,
-        nickName: res[0].nickName,
+        nickname: res[0].nickname,
         username: res[0].username
       }
       ctx.body = {
-        code: '200',
+        code: "200",
         data: result,
         mess: '登录成功'
       }
-    }
-    else{
+    } else {
       r = 'error';
       ctx.body = {
-        code: '302',
+        code: '404',
         data: r,
         mess: '账号或密码错误'
       }
@@ -57,7 +55,132 @@ router.post('/userLogin', async(ctx, next) =>{
       data: err
     }
   })
+})
+// 注册
+router.post('/userRegister', async (ctx, next) => {
+  let username = ctx.request.body.username;
+  let userpwd = ctx.request.body.userpwd;
+  let nickname = ctx.request.body.nickname;
+  if (!username || !userpwd || !nickname) {
+    ctx.body = {
+      code: '80000',
+      mess: '账号、密码和昵称不能为空'
+    }
+  }
+  let user = {
+    username: username,
+    userpwd: userpwd,
+    nickname: nickname
+  }
+  await userService.findUser(user.username).then(async (res) => {
+    // console.log(res);
+    if (res.length) {
+      try {
+        throw Error('用户名已存在')
+      }catch(error) {
+        console.log(error)
+      }
+      ctx.body = {
+        code: '80003',
+        data: 'err',
+        mess: '用户名已存在'
+      }
+    }else {
+      await userService.insertUser([user.username, user.userpwd, user.nickname])
+      .then( res => {
+        // console.log(res)
+        let r = ''
+        if (res.affectedRows !== 0){
+          r = 'ok'
+          ctx.body = {
+            code: '200',
+            data: r,
+            mess: '注册成功'
+          }
+        }
+        else {
+          r = 'error'
+          ctx.body = {
+            code: '500',
+            data: r,
+            mess: '注册失败'
+          }
 
+        }
+      })
+      .catch((err) => {
+          ctx.body = {
+            code: '505',
+            data:err
+          }
+      })
+    }
+  })
+})
+
+//根据分类名称查找对应的笔记列表
+router.post('/findNoteListBytype', async(ctx, next) => {
+  //获取前端传过来的
+  let note_type = ctx.request.body.note_type
+  // console.log(note_type)
+  await userService.findNoteListBytype(note_type)
+  .then(async (res) => {
+    // console.log(res)
+    let r = ''
+    if (res.length) {
+      r = 'ok'
+      ctx.body = {
+        code: '200',
+        data: res,
+        mess: '查找成功'
+      }
+    }else {
+      r = 'error'
+      ctx.body = {
+        code: '404',
+        data: r,
+        mess: '查找失败'
+      }
+    }
+  })
+  .catch((err) => {
+    ctx.body = {
+      code: '500',
+      data: err,
+      mess: '服务器出小差了'
+    }
+  })
+})
+
+//根据id查找对应的笔记详情
+router.post('/findNoteDetailById', async(ctx, next) => {
+  let id = ctx.request.body.id
+  await userService.findNoteDetailById(id)
+  .then(async (res)=>{
+    let r =''
+    if(res.length) {
+      r = 'ok'
+      ctx.body = {
+        code: '200',
+        data: res[0],
+        mess: '查找成功'
+      }
+    }else{
+      r = 'error'
+      ctx.body = {
+        code: '404',
+        data: r,
+        mess: '查找失败'
+      }
+    }
+  })
+  .catch((err) => {
+    ctx.body = {
+      code: '8000',
+      data: err,
+      mess: '服务器出小差了'
+    }
+  })
 })
 
 module.exports = router

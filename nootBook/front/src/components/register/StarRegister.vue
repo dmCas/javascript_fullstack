@@ -48,7 +48,12 @@ export default {
           }
         })
         .then((res) => {
-          
+          console.log(res)
+          if(res.data.code === '200') {
+            this.$router.push({path: '/StarLogin'})
+          }else {
+            this.$toast(res.data.mess)
+          }
         })
       }
     }

@@ -46,7 +46,7 @@ export default {
         console.log(res)
         if(res.data.code === '200'){
           sessionStorage.setItem('userInfo', JSON.stringify(res.data.data))
-          this.$router.push({path: '/nodeClass'})
+          this.$router.push({path: '/noteClass'})
         }else{
           this.$toast('账号或密码错误，请重新输入')
         }
