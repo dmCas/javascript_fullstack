@@ -70,11 +70,19 @@ let findNoteDetailById = function(id){
   return allServies.query(_sql)
 }
 
+//发布笔记 options接受一个数组
+let insertNote = function (options) {
+  let _sql = `insert into note set c_time=?, m_time=?, note_content=?, head_img=?, title=?, note_type=?, useId=?, nickname=?;`
+  return allServies.query(_sql, options)
+}
+
+
 module.exports = {
   getAllUsers,
   userLogin,
   findUser,
   insertUser,
   findNoteListBytype,
-  findNoteDetailById
+  findNoteDetailById,
+  insertNote
 }

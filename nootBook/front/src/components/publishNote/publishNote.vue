@@ -1,12 +1,13 @@
 <template>
   <div class="publish-note">
-    <quill-editor 
-    v-model="content"
-    ref="myQuillEditor"
-    :option="editorOption"
-    @blur="onEditorBlur($event)"
-    @focus="onEditorFocus($event)"
-    @change="onEditorChange($event)"></quill-editor>
+    <quill-editor
+      v-model="content"
+      ref="myQuillEditor"
+      :option="editorOption"
+      @blur="onEditorBlur($event)"
+      @focus="onEditorFocus($event)"
+      @change="onEditorChange($event)"
+    ></quill-editor>
     <div class="note-wrap">
       <div class="note-title">
         <h2>输入标题</h2>
@@ -14,24 +15,24 @@
       </div>
       <div class="note-title">
         <h2>上传图片</h2>
-        <van-uploader :after-read="onRead" accep="image/*.*" >
+        <van-uploader :after-read="onRead" accep="image/*.*">
           <van-icon name="photograph"></van-icon>
           <span style="font-size:15px;color:red;margin-left:15px;">*图片规格*750*750*</span>
         </van-uploader>
-        <img alt="" class="preImg" :src="preImg" v-if="preImg">
+        <img alt class="preImg" :src="preImg" v-if="preImg" />
       </div>
       <div class="note-title">
         <h2>选择分类</h2>
         <span class="note-type" @click="selectType">选择分类 &gt; {{selectCon}}</span>
-        <van-action-sheet 
-         v-model="show" 
-         :actions="actions" 
-         @select="onSelect"
-         cancel-text="取消"
-         @cancel="onCancel" 
-         />
+        <van-action-sheet
+          v-model="show"
+          :actions="actions"
+          @select="onSelect"
+          cancel-text="取消"
+          @cancel="onCancel"
+        />
       </div>
-      <div class="publish-btn">发布笔记</div>
+      <div class="publish-btn" @click="publish">发布笔记</div>
     </div>
   </div>
 </template>
@@ -69,7 +70,7 @@ export default {
         }
       },
       title: "",
-      preImg:'',
+      preImg: "",
       selectCon: "",
       show: false,
       actions: [
@@ -92,31 +93,54 @@ export default {
           subname: "科技"
         }
       ]
-
     };
   },
   methods: {
-    onEditorBlur(e){
-
+    onEditorBlur(e) {},
+    onEditorFocus(e) {},
+    onEditorChange(e) {},
+    onRead(file) {
+      console.log(file);
+      this.preImg = file.content;
     },
-    onEditorFocus(e){
-      
+    selectType() {
+      this.show = true;
     },
-    onEditorChange(e){
-
+    onSelect(item) {
+      this.selectCon = item.subname;
+      this.show = false;
     },
-    onRead(){
-
+    onCancel() {
+      this.show = false;
     },
-    selectType(){
-      this.show = true
-    },
-    onSelect(item){
-      this.selectCon = item.subname
-      this.show = false
-    },
-    onCancel(){
-      this.show = false
+    publish() {
+      let curUseId = JSON.parse(sessionStorage.getItem('userInfo')).id
+      let nickname = JSON.parse(sessionStorage.getItem('userInfo')).nickname
+      this.$http({
+        //getItem取出来
+        method: "post",
+        url: "http://localhost:3000/users/insertNote",
+        data: {
+          head_img: this.preImg,
+          title: this.title.trim(),
+          note_type: this.selectCon,
+          useId: curUseId,
+          //错误写法
+          // nickname: JSON.parse(sessionStorage.userInfo).nickname,
+          nickname: nickname,
+          note_content : this.content
+        }
+      }).then(res => {
+        console.log(res);
+        if (res.data.code === "200") {
+          this.$toast(res.data.mess);
+          setTimeout(( ) => {
+            this.$router.push({path:'/noteClass'})
+          })
+        } else {
+          this.$toast(res.data.mess);
+        }
+      });
     }
   },
   components: {
@@ -126,8 +150,8 @@ export default {
 </script>
 
 <style lang="less">
-.van-uploader{
-  padding:10px 15px;
+.van-uploader {
+  padding: 10px 15px;
   display: flex;
   align-items: center;
 }
@@ -144,7 +168,7 @@ export default {
     padding: 10px;
     background: #f5f5f5;
   }
-  .preImg{
+  .preImg {
     width: 100px;
     height: 100px;
     margin-left: 15px;
