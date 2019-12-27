@@ -1,0 +1,21 @@
+{
+  "name": "fp-memorize-http-cache",
+  "version": "1.0.0",
+  "description": "1. 相同的输入会有相同的输出 2. 不会产生副作用 f(x) = x ^ 2 f(1) = 1 f(3) = 9  // 第一次计算 9  3 -> 9 f(3) = 9  // 第二次",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.11.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "md5": "^2.2.1"
+  },
+  "devDependencies": {
+    "utility": "^1.16.3"
+  }
+}
