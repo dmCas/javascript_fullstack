@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <p>{{name}}</p>
+  <p>{{age}}</p>
+  <script>
+    let data = {
+      name: 123
+    }
+    this.name = 456;
+    // 模板要知道 name 什么时候被改了
+    data.age = 18
+
+    // 第三个参数：数据描述符
+    Object.defineProperty(data, 'sex', {
+      enumerable:false,
+      writable: false,
+      value: 'man'
+    })
+    data.sex = 'nv' //无效
+    // console.log(data.sex)
+    for (let key in data) {
+      console.log('data中的属性：' + key)
+    }
+
+    let data1 = {
+      _name1: undefined,
+      get name1(){
+        return this._name1
+      },
+      set name1 (val) {
+        this.name1 = val;
+      }
+    }
+    console.log(data1.name1)
+    // defineProperty 定义属性 1： value 2:get/set
+    // get set
+    Object.defineProperty(data, 'name1', {
+      get: function() {
+        return data._name1
+      },
+      set: function(val) {
+        console.log('我知道改变了,重新渲染一次')
+        data._name1 = val;
+      }
+    })
+    data1.name1 = 'abcd'
+
+    let data3 = {
+      list: [1, 2, 3, 4]
+    }
+    data3.list.push(5); // 会
+    //怎么知道数组的改变
+    
+
+  </script>
+</body>
+</html>
