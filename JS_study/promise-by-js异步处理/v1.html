@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // cb 为回调函数
+    function Mypromise(cb){
+      let self = this
+      function resolve(val){
+        console.log(val)
+        //挂到属性上面 使取可以被类内取到
+        self.data = val
+      }
+      cb(resolve);
+    }
+    Mypromise.prototype.then = function(onResolve) {
+      //把构造函数里的值通知给原型对象上
+      onResolve(this.data);
+    }
+    let q = new Mypromise((resolve) => {
+      resolve(456);
+    })
+    q.then(res =>{
+      console.log(res)
+    })
+    let p = new Promise((resolve) => {
+      resolve(123);
+    })
+    p.then(res => {
+      console.log(res)
+    })
+  </script>
+</body>
+</html>

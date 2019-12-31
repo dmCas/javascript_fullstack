@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    const PENDING = 'PENDING'
+    const RESOLVED = 'RESOLVED'
+    const REJECTED = 'REJECTED'
+
+    // cb 为回调函数
+    function Mypromise(cb){
+      let self = this
+      self.status = PENDING;
+      function resolve(val){
+        // 外面调用 resolve(123)
+        console.log(val)
+        //挂到属性上面 使取可以被类内取到
+        self.data = val;
+        // 控制then 调用的时机
+        self.status = RESOLVED;
+        //执行 then 里面的回调
+        self.onResolve && self.onResolve(val);
+
+      }
+      cb(resolve);
+    }
+    Mypromise.prototype.then = function(onResolve) {
+      if (this.status === RESOLVED){
+          //把构造函数里的值通知给原型对象上
+          onResolve(this.data);
+      }
+      if(this.status === PENDING){
+        // 告诉 构造函数里面的 resolve
+        this.onResolve = onResolve
+
+        // //处理链式调用 返回Promise
+        // return new Mypromise((resolve) => {
+        // // 1.resolve(??) 上一步的结果
+        // //2. 上一步的结果？？？ this.data
+        //   // resolve(this.data);
+        // this.onResolve = function(val){
+        //   // 1. 上一个 then 拿到 结果
+        //   let res = onResolve(val);
+        //   resolve(res)
+        //   // 
+        // }
+        // })
+      }
+     
+    }
+    let q = new Mypromise((resolve) => {
+      //先执行then 输出undefined 三秒后输出567
+      setTimeout(() => {
+        resolve(567)
+      }, 3000)
+    })
+    q.then(res =>{
+      console.log(res);
+      // return res;
+    })
+    // .then( res => {
+    //   console.log('res2' , res)
+    // })
+    // let p = new Promise((resolve) => {
+    //   resolve(123);
+    // })
+    // p.then(res => {
+    //   console.log(res)
+    // })
+  </script>
+</body>
+</html>
