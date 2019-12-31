@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div>
+    <div class="name"></div>
+  </div>
+  <script>
+    var xhr = null;
+    xhr = new XMLHttpRequest()
+    xhr.open('get', './mock.json', true)
+    xhr.send()
+    // 状态变化回调 
+    // readyState
+    // 0: 请求未初始化
+    // 1: 服务器连接已建立
+    // 2: 请求已接收 接收到了响应头
+    // 3: 请求处理中 正在下载响应体
+    // 4: 请求已完成，且响应已就绪
+    xhr.onreadystatechange = function(){
+      // console.log(xhr.readyState, xhr.status)
+      if(xhr.readyState === 4 && xhr.status === 200){
+        console.log(xhr.responseText)
+        var data = JSON.parse(xhr.responseText)
+        document.querySelector('.name').innerHTML = data.person.name
+      }
+    }
+  </script>
+</body>
+</html>

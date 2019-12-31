@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+  <title>Document</title>
+</head>
+<body>
+  <div class="people">
+    <div class="name">
+
+    </div>
+    <div class="age"></div>
+  </div>
+  <script>
+     $.ajax({
+      url: './mock.json',
+      type: 'get',
+      method: 'get',
+      dataType: 'json',
+      timeout: 5000, //最大的请求时长
+      async: true, //不写也可以 默认是异步的
+      success: function(data){
+        console.log(data.person)
+        $('.name').html(data.person.name)
+        $('.age').html(data.person.age)
+      }
+      })
+  </script>
+</body>
+</html>
