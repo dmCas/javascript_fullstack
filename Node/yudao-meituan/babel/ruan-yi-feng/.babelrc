@@ -1,0 +1,6 @@
+{
+  // 预处理 
+  "presets": ["@babel/preset-env"],
+  // 添加一个插件 
+  "plugins": ["@babel/plugin-syntax-dynamic-import"]
+}

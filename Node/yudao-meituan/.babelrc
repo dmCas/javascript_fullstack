@@ -1,0 +1,6 @@
+{   
+   //预处理
+   "presets":["@babel/preset-env"],
+   //插件 帮助我们做动态加载
+   "plugins": ["@babel/plugin-syntax-dynamic-import","@babel/transform-runtime"]
+}
