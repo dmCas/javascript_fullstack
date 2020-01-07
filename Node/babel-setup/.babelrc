@@ -1,0 +1,9 @@
+{
+  //将箭头函数转换为es5
+  "plugins": ["@babel/plugin-transform-arrow-functions",
+  "@babel/plugin-transform-runtime"],
+  "presets":[["@babel/preset-env",{
+    "useBuiltIns":"usage",
+    "corejs":3
+  }]]
+}
