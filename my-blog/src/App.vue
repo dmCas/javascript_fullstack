@@ -1,12 +1,30 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <!-- header -->
+    <Nav></Nav>
+    <div class="layout">
+      <router-view/>
+      <Slider class="slider">
+
+      </Slider>
     </div>
     <router-view />
   </div>
 </template>
+
+<script lang="ts">
+  import {Vue, Component} from 'vue-property-decorator'
+  import Nav from '@/components/Nav.vue'
+  import Slider from '@/components/Slider.vue'
+  @Component({
+    components: {
+      Nav
+    }
+  })
+  export default class App extends Vue{
+
+  }
+</script>
 
 <style lang="less">
 #app {
@@ -15,6 +33,15 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  padding-top: 61px;
+}
+.layout{
+  display: flex;
+  justify-content: space-around;
+}
+
+.slider{
+  flex:0 0 300px;
 }
 
 #nav {
